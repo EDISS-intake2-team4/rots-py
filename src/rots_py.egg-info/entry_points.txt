@@ -1,0 +1,2 @@
+[console_scripts]
+realpython = rots.__main__:main

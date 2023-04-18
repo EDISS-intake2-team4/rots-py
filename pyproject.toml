@@ -1,0 +1,28 @@
+# pyproject.toml
+
+[project]
+name = "rots-py"
+version = "1.0.0"
+description = "ROTS gene ranking implementation in Python"
+readme = "README.md"
+authors = [{ name = "F.Mamadbekov, M.Shakya, A.Montoya, I.Ul-Haq", email = "fmamadbe@abo.fi" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["rots", "gene", "ranking"]
+dependencies = [
+    "numba >= 0.56.4",
+    "numpy",
+    "pandas",
+    "tqdm>=4.64.1",
+]
+requires-python = ">=3.6"
+
+[project.urls]
+Homepage = "https://github.com/EDISS-intake2-team4/rots-py"
+
+[project.scripts]
+realpython = "rots.__main__:main"

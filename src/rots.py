@@ -119,8 +119,8 @@ def rots(data, groups, B=1000, K=None, paired=False, seed=None, a1=None, a2=None
     pb.close()
 
   ## Free up memory
-  del samples
-  del pSamples
+  ##del samples
+  ##del pSamples
     
   ## ---------------------------------------------------------------------------
 
@@ -200,8 +200,8 @@ def rots(data, groups, B=1000, K=None, paired=False, seed=None, a1=None, a2=None
 
     ## Free up memory
     #rm(D, S)
-    del D
-    del S
+    #del D
+    #del S
 
     #ipdb.set_trace(context=6)   ## BREAKPOINT
     reprotable.iloc[i] = np.mean(cResults["overlaps"], axis=0) #colMeans(cResults[["overlaps"]])
@@ -213,9 +213,9 @@ def rots(data, groups, B=1000, K=None, paired=False, seed=None, a1=None, a2=None
                                       (cResults["overlaps"].shape[0] - 1))[0]
 
     ## Free up memory
-    del overlaps
-    del overlaps_P
-    del cResults
+    ##del overlaps
+    #del overlaps_P
+    #del cResults
 
     ## -------------------------------------------------------------------------
 
@@ -227,8 +227,8 @@ def rots(data, groups, B=1000, K=None, paired=False, seed=None, a1=None, a2=None
     ztable = ztable.infer_objects()
 
     ## Free up memory
-    del reprotable_P
-    del reprotable_sd
+    #del reprotable_P
+    #del reprotable_sd
     
     sel = np.unravel_index(np.argmax(ztable[np.isfinite(ztable)]), ztable.shape) #np.where(ztable == max(ztable[is.finite(ztable)]), arr.ind=TRUE)
     ## Sel is a matrix containing the location(s) of the largest value (row,
@@ -252,7 +252,7 @@ def rots(data, groups, B=1000, K=None, paired=False, seed=None, a1=None, a2=None
     Z = ztable.iloc[sel[0],sel[1]]
     
     ## Free up memory
-    del reprotable
+    #del reprotable
     
     #ipdb.set_trace(context=6)   ## BREAKPOINT
     ## Calculate the reproducibility-optimized test statistic based on the
@@ -263,7 +263,7 @@ def rots(data, groups, B=1000, K=None, paired=False, seed=None, a1=None, a2=None
     pD = pD/(a1 + a2 * pS)
     
     ## Free up memory
-    del pS
+    #del pS
     
     if verbose: 
       print("Calculating p-values")
@@ -274,7 +274,7 @@ def rots(data, groups, B=1000, K=None, paired=False, seed=None, a1=None, a2=None
     FDR = calculateFDR(d, pD, progress)
     
     ## Free up memory
-    del pD
+    #del pD
 
     ROTS_output = {
       "data": data,

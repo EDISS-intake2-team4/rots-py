@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: rots-py
-Version: 1.0.0
+Version: 1.0.3
 Summary: ROTS gene ranking implementation in Python
 Author-email: "F.Mamadbekov, M.Shakya, A.Montoya, I.Ul-Haq" <fmamadbe@abo.fi>
 License: MIT License

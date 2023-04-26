@@ -24,7 +24,7 @@ def calculateOverlaps1(D, S, pD, pS, D_len, N, N_len, ssq_i, B, overlaps, overla
 
   return {'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)} 
 
-@jit(nopython=True)
+@jit(nopython=True, error_model='numpy')
 def fast_make_res(res1, res2, pres1, pres2, D_ovlp, S_ovlp, pD_ovlp, pS_ovlp, D_len, ssq_i, b, B):
   for i in range(D_len):
     res1[i] = np.abs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )
@@ -48,7 +48,7 @@ def calculateOverlap_1(r1, r2, r_len, N, N_len, b, B, overlaps):
 
   return overlaps
 
-@jit(nopython=True)
+@jit(nopython=True, error_model='numpy')
 def fast_ovlp(r2, r3, N_len, N, B, b, overlaps):
   #Calculate the overlap
   for i in range(N_len):
@@ -70,14 +70,14 @@ def sort2_1(a, b, n):
   a, b = split_pairs(pairs, n)
   return (a, b)
 
-@jit(nopython=True, parallel=True)
+@jit(nopython=True, parallel=True, error_model='numpy')
 def make_pairs(a, b, n):
   pairs = np.empty((n, 2))
   for i in prange(n):
     pairs[i] = [a[i], b[i]]
   return pairs
 
-@jit(nopython=True, parallel=True)
+@jit(nopython=True, parallel=True, error_model='numpy')
 def split_pairs(pairs, n):
   # Split the pairs back into the original vectors (dec).
   a = np.empty(n)

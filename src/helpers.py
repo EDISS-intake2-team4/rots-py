@@ -3,7 +3,7 @@ from numba import njit, jit
 import pandas as pd
 from tqdm import tqdm
 
-@jit(nopython=True)
+@jit(nopython=True, error_model='numpy')
 def bootstrapSamples(B, labels, paired):
   samples = np.zeros((B, len(labels)))#matrix(nrow=B, ncol=length(labels))
   
@@ -26,7 +26,7 @@ def bootstrapSamples(B, labels, paired):
   
   return samples
 
-@njit
+@jit(nopython=True, error_model='numpy')
 def permutatedSamples(B, cl):
   samples = np.zeros((B, len(cl)))
   for i in range(B):
@@ -52,15 +52,15 @@ def testStatistic(paired, samples):
      mX = np.nanmean(X, axis=1, keepdims=True) #rowMeans(X, na.rm=TRUE)
      mY = np.nanmean(Y, axis=1, keepdims=True) #rowMeans(Y, na.rm=TRUE)
      
-     mX[np.isnan(mX)] = 0
-     mY[np.isnan(mY)] = 0
+     #mX[np.isnan(mX)] = 0
+     #mY[np.isnan(mY)] = 0
 
      ## Pooled standard deviations for each row
      sX = np.nansum((X - mX)**2, axis=1) #rowSums((X - mX)^2, na.rm=TRUE)
      sY = np.nansum((Y - mY)**2, axis=1) #rowSums((Y - mY)^2, na.rm=TRUE)
 
-     sX[np.isnan(sX)] = 0
-     sY[np.isnan(sY)] = 0
+     #sX[np.isnan(sX)] = 0
+     #sY[np.isnan(sY)] = 0
      
      if not paired:
        ## Number of not NA values in each row
@@ -74,7 +74,7 @@ def testStatistic(paired, samples):
        
        ## Cases with less than two non-missing values.
        ## Set d = 0, s = 1
-       ind = np.where( (nY < 2) | (nX < 2) )[0]
+       ind = np.where( (nY < 2) | (nX < 2) )
        d[ind] = 0
        s[ind] = 1
      
@@ -197,7 +197,7 @@ def biggerN(x, y):
 
   return res
 
-@njit
+@jit(nopython=True, error_model='numpy')
 def pvalue(a, b):
   observed = a.ravel()
   permuted = b.ravel()

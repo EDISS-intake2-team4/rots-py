@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 @jit(nopython=True, error_model='numpy')
 def bootstrapSamples(B, labels, paired):
-  samples = np.zeros((B, len(labels)))#matrix(nrow=B, ncol=length(labels))
+  samples = np.zeros((B, len(labels)))
   
   for i in range(B):
     for label in np.unique(labels):

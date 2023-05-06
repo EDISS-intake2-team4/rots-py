@@ -1,6 +1,0 @@
-__init__
-__main__
-calculateOverlaps1
-calculateOverlaps2
-helpers
-rots

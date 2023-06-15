@@ -7,8 +7,9 @@ import random
 from helpers import bootstrapSamples, permutatedSamples, testStatistic, calculateP, calculateFDR
 from calculateOverlaps1 import calculateOverlaps1
 from calculateOverlaps2 import calculateOverlaps2
+from optim_cy import optim
 
-def rots(data, groups, B=1000, K=None, paired=False, seed=None, a1=None, a2=None, log=None, progress=False, verbose=True):
+def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None, log=False, progress=False, verbose=True):
   #if isinstance(data, pd.DataFrame):
   #  data_val = data.values    
   
@@ -169,7 +170,7 @@ def rots(data, groups, B=1000, K=None, paired=False, seed=None, a1=None, a2=None
       overlaps_P = np.zeros((B,len(N)))      
 
       
-      cResults = calculateOverlaps1(D, S, pD, pS, len(D), N.astype(int), len(N),
+      cResults = optim.calculateOverlaps1(D, S, pD, pS, len(D), N.astype(int), len(N),
                         ssq[i], int(B), overlaps, overlaps_P)
       
       ## Colmeans & rowMeans are a lot faster than apply
@@ -198,7 +199,7 @@ def rots(data, groups, B=1000, K=None, paired=False, seed=None, a1=None, a2=None
     overlaps = np.zeros((B,len(N)))
     overlaps_P = np.zeros((B,len(N)))
     
-    cResults = calculateOverlaps2(D, pD, len(D), N.astype(int), len(N),
+    cResults = optim.calculateOverlaps2(D, pD, len(D), N.astype(int), len(N),
                     int(B), overlaps, overlaps_P)
 
     #ipdb.set_trace(context=6)   ## BREAKPOINT

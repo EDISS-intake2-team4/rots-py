@@ -3,7 +3,7 @@ from numba import njit, jit
 import pandas as pd
 from tqdm import tqdm
 
-from optim_cy import pvalue
+from optim_cy import optim
 
 @jit(nopython=True, error_model='numpy')
 def bootstrapSamples(B, labels, paired):
@@ -139,7 +139,7 @@ def calculateP(observed, permuted):
   print("permuted shape: ", permuted.shape)
   # Get p-values from C++ code
   # (expects ordered vectors)
-  p = pvalue.pvalue(observed, permuted)
+  p = optim.pvalue(observed, permuted)
   
   # Revert to original ordering
   results = np.zeros(len(p)) #vector(mode="numeric", length=length(p))

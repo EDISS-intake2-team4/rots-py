@@ -63,7 +63,7 @@ Python `dict` object with the following keys:
 - `cl`: Group labels for each sample
 
 # Acknowledgements
-This package was developed as part of the [EDISS](https://www.master-ediss.eu/) program with the support of Coffey Lab at the [Turku Bioscience](https://bioscience.fi/) center. 
+This package was developed as part of the [EDISS](https://www.master-ediss.eu/) program in collaboration with Coffey Lab at the [Turku Bioscience](https://bioscience.fi/) center.
 
 # Changelog
 ## 1.1.0

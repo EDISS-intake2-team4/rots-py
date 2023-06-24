@@ -1,5 +1,9 @@
 # rots-py
 
+[![PyPI](https://img.shields.io/pypi/v/rots-py)](https://pypi.org/project/rots-py/)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/rots-py)
+
+
 Python implementation of the __Reproducibility-Optimized Test Statistic (ROTS)__ for gene ranking from the [Bioconductor ROTS](https://www.bioconductor.org/packages/release/bioc/html/ROTS.html) package.
 
 ROTS belongs to a familly of gene ranking statistics that aim to rank genes based on evidence for differential expression in two-group comparisons. ROTS is a non-parametric method that uses a permutation test to assess the significance of the observed differential expression. ROTS is designed to be robust to outliers and to be reproducible across different studies.

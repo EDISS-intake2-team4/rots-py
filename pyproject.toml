@@ -2,7 +2,7 @@
 
 [project]
 name = "rots-py"
-version = "1.0.3"
+version = "1.2.0"
 description = "ROTS gene ranking implementation in Python"
 readme = "README.md"
 authors = [{ name = "F.Mamadbekov, M.Shakya, A.Montoya, I.Ul-Haq", email = "fmamadbe@abo.fi" }]
@@ -25,4 +25,4 @@ requires-python = ">=3.6"
 Homepage = "https://github.com/EDISS-intake2-team4/rots-py"
 
 [project.scripts]
-realpython = "rots.__main__:main"
+realpython = "rotspy.__main__:main"

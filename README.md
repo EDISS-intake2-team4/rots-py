@@ -13,24 +13,30 @@ pip install rots-py
 
 # Usage
 ```python  
-import rots
+from rotspy import rots, plot_rots, get_summary
 
 # Load data
 data = ...
 group = ...
 
 # Run ROTS
-result = rots.rots(data, group, B=500, log=True, verbose=True, progress=True)
+result = rots(data, group, B=500, log=True, verbose=True, progress=True)
 
 # Get the ranking
 ranking_statistic = result["d"]
 fdr = result["fdr"]
 logFC = result["logfc"]
 pvalue = result["p"]
+
+# Get the summary of result with FDR threshold of 0.05
+summary = get_summary(result, fdr_c=0.05)
+
+# Plot volcano plot from the results
+plot_rots(result, fdr=0.05, type="volcano")
 ```
 
 # Methods
-## rots
+## rots(...)
 Runs the ROTS analysis on the given data. Returns a Python dictionary.
 
 ## Parameters
@@ -62,10 +68,49 @@ Python `dict` object with the following keys:
 - `ztable`: Z-score table
 - `cl`: Group labels for each sample
 
+## get_summary(...)
+Returns a summary of the ROTS results.
+
+## Parameters
+- `rots_res`: The result of the `rots` function. (required)
+- `fdr_c`: The FDR threshold for the summary. Default is `None` (required if `n_features` is not specified)
+- `n_features`: The number of top rows to show in the summary. Default is `None` (required if `fdr` is not specified)
+- `verbose`: Whether to print the summary. Default is `True` (optional)
+
+## Returns
+A pandas dataframe with the following columns:
+- `Row`: The row names of the input dataframe
+- `ROTS Statistic`: The ROTS statistic for each row
+- `pvalue`: The p-value for each row
+- `FDR`: The FDR for each row
+
+## plot(...)
+Plots the ROTS results. 
+
+## Parameters
+- `rots_res`: The result of the `rots` function. (required)
+- `fdr`: The FDR threshold for the plot. Default is `0.05` (required)
+- `type`: The type of plot to generate. (required)
+    - "volcano"
+    - "heatmap"
+    - "ma"
+    - "reproducibility"
+    - "pvalue"
+    - "pca"
+
+
+
 # Acknowledgements
 This package was developed as part of the [EDISS](https://www.master-ediss.eu/) program in collaboration with Coffey Lab at the [Turku Bioscience](https://bioscience.fi/) center.
 
 # Changelog
+## 1.2.0
+- Added `get_summary` function
+- Added `plot_rots` function
+- Modified the import statement to `from rotspy import ...`
+- More optimizations
+- Bug fixes
+
 ## 1.1.0
 - Ported parts of code to Cython for better performance
 - Fixed bugs

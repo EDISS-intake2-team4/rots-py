@@ -3,9 +3,22 @@
 # distutils: language = c++
 import numpy as np
 cimport cython 
+cimport numpy as np
+
+from libcpp.vector cimport vector
+from libcpp.utility cimport pair
+from libcpp.algorithm cimport sort
+from libc.stdlib cimport malloc, free
+from libc.math cimport fabs
+
 
 cdef extern from "stdlib.h":
   void qsort(void* base, size_t nmemb, size_t size, int (*compar)(const void*, const void*))
+
+cdef void print_array(double* arr, int length):
+  cdef Py_ssize_t i
+  for i in range(length):
+    print(arr[i])
 
 cdef int compare_func(const void* a, const void* b):
   cdef double element_a = (<double*>a)[0]
@@ -32,84 +45,132 @@ cdef int compare_func(const void* a, const void* b):
 #   return res
 
 #@cython.boundscheck(False)  # Deactivate bounds checking
-@cython.wraparound(False)   # Deactivate negative indexing.
-
 def pvalue(double[:] observed, double[:] permuted):
   cdef Py_ssize_t a_max = observed.shape[0]
   cdef Py_ssize_t b_max = permuted.shape[0]
-  pvalues = np.zeros(a_max, dtype=np.double)
-  cdef double[:] pvalues_view = pvalues
+  #pvalues = np.zeros(a_max, dtype=np.double)
+  #cdef double[:] pvalues_view = pvalues
+  cdef double *pvalues = <double *>malloc(a_max * sizeof(double))
 
   cdef Py_ssize_t i
   cdef int j = 0
   for i in range(a_max):
-    while j < b_max and permuted[j] >= observed[i]:
+    while permuted[j] >= observed[i] and j < b_max:
       j += 1
-    pvalues_view[i] = float(j) / b_max
+    pvalues[i] = float(j) / b_max
 
-  return pvalues
+  # Convert the C-style array to a NumPy array
+  cdef np.ndarray[np.double_t] pvalues_array = np.empty(a_max, dtype=np.double)
+  for i in range(a_max):
+    pvalues_array[i] = pvalues[i]
 
-def calculateOverlaps1(D, S, pD, pS, int D_len, int[:] N, int N_len, double ssq_i, int B, overlaps, overlaps_P):  
-  cdef double[:] D_ovlp = D.ravel()
-  cdef double[:] S_ovlp = S.ravel()
-  cdef double[:] pD_ovlp = pD.ravel()
-  cdef double[:] pS_ovlp = pS.ravel()
-  overlaps_ovlp = overlaps.ravel()
-  overlaps_P_ovlp = overlaps_P.ravel()
+  # Free the memory allocated for pvalues
+  free(pvalues)
+
+  return pvalues_array
+
+@cython.cdivision(True)
+def calculateOverlaps1(double[:,:] D, double[:,:] S, double[:,:] pD, double[:,:] pS, int D_len, int[:] N, int N_len, double ssq_i, int B, double[:,:] overlaps, double[:,:] overlaps_P):  
+  # cdef double[:] D_ovlp = flatten(D)
+  # cdef double[:] S_ovlp = flatten(S)
+  # cdef double[:] pD_ovlp = flatten(pD)
+  # cdef double[:] pS_ovlp = flatten(pS)
+  cdef vector[double] D_ovlp = flatten_to_vec(D)
+  cdef vector[double] S_ovlp = flatten_to_vec(S)
+  cdef vector[double] pD_ovlp = flatten_to_vec(pD)
+  cdef vector[double] pS_ovlp = flatten_to_vec(pS)
+  cdef vector[double] overlaps_ovlp = flatten_to_vec(overlaps)
+  cdef vector[double] overlaps_P_ovlp = flatten_to_vec(overlaps_P)
+
+  
     
-  res1 = np.zeros(D_len, dtype=np.double)
-  cdef double[:] res1_view = res1
-  res2 = np.zeros(D_len, dtype=np.double)
-  cdef double[:] res2_view = res2
-  pres1 = np.zeros(D_len, dtype=np.double)
-  cdef double[:] pres1_view = pres1
-  pres2 = np.zeros(D_len, dtype=np.double)
-  cdef double[:] pres2_view = pres2
-
+  # res1 = np.zeros(D_len, dtype=np.double)
+  # cdef double[:] res1_view = res1
+  # res2 = np.zeros(D_len, dtype=np.double)
+  # cdef double[:] res2_view = res2
+  # pres1 = np.zeros(D_len, dtype=np.double)
+  # cdef double[:] pres1_view = pres1
+  # pres2 = np.zeros(D_len, dtype=np.double)
+  # cdef double[:] pres2_view = pres2
+  cdef double *res1 = <double *>malloc(D_len * sizeof(double))
+  cdef double *res2 = <double *>malloc(D_len * sizeof(double))
+  cdef double *pres1 = <double *>malloc(D_len * sizeof(double))
+  cdef double *pres2 = <double *>malloc(D_len * sizeof(double))
+   
   cdef Py_ssize_t b,i
-  for b in range(1, B):
+  for b in range(1, B+1):
     #res1, res2, pres1, pres2 = fast_make_res(res1, res2, pres1, pres2, D_ovlp, S_ovlp, pD_ovlp, pS_ovlp, D_len, ssq_i, b, B)
-    for i in range(D_len):
-      res1_view[i] = np.abs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )
-      res2_view[i] = np.abs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )
-      pres1_view[i] = np.abs( pD_ovlp[(b-1) * D_len + i] / (pS_ovlp[(b-1) * D_len + i] + ssq_i))
-      pres2_view[i] = np.abs( pD_ovlp[(b + B - 1) * D_len + i] / (pS_ovlp[(b + B -1) * D_len + i] + ssq_i))
+    for i in range(D_len):      
+      res1[i] = fabs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )
+      res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )
+      pres1[i] = fabs( pD_ovlp[(b-1) * D_len + i] / (pS_ovlp[(b-1) * D_len + i] + ssq_i))
+      pres2[i] = fabs( pD_ovlp[(b + B - 1) * D_len + i] / (pS_ovlp[(b + B -1) * D_len + i] + ssq_i))
             
-    calculateOverlap_1(res1_view, res2_view, D_len, N, N_len, b, B, overlaps_ovlp)
-    calculateOverlap_1(pres1_view, pres2_view, D_len, N, N_len, b, B, overlaps_P_ovlp)
+    calculateOverlap_1(res1, res2, D_len, N, N_len, b, B, overlaps_ovlp)
+    calculateOverlap_1(pres1, pres2, D_len, N, N_len, b, B, overlaps_P_ovlp)
+  
+  free(res1)
+  free(res2)
+  free(pres1)
+  free(pres2)
 
-  return {'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)} 
+  # Reshape the vectors to 2D using NumPy
+  #cdef np.ndarray[np.double_t, ndim=2] overlaps_reshaped = np.reshape(overlaps_ovlp, (B, N_len))
+  #cdef np.ndarray[np.double_t, ndim=2] overlaps_P_reshaped = np.reshape(overlaps_P_ovlp, (B, N_len))
 
-cdef int global_sum = 0
+  cdef dict result = {
+      "overlaps": np.reshape(overlaps_ovlp, (B, N_len)),
+      "overlaps_P": np.reshape(overlaps_P_ovlp, (B, N_len)),
+  }
+
+  return result #{'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)} 
+
+cdef double[:] flatten(double[:,:] arr):
+  cdef Py_ssize_t x_max = arr.shape[0]
+  cdef Py_ssize_t y_max = arr.shape[1]
+  cdef double[:] res = np.zeros(x_max * y_max, dtype=np.double)
+  cdef Py_ssize_t i, j
+  cdef Py_ssize_t k = 0
+  for i in range(x_max):
+    for j in range(y_max):
+      res[k] = arr[i, j]
+      k += 1
+  return res
 
 # Calculate the overlap
-cpdef void calculateOverlap_1(double[:] r1, double[:] r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, overlaps):
+cdef void calculateOverlap_1(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):
   # Copy r2 and sort the copy.
-  r3 = np.zeros(r_len, dtype=np.double)
-  cdef double[:] r3_view = r3
+  #r3 = np.zeros(r_len, dtype=np.double)
+  #cdef double[:] r3_view = r3
+  cdef double *r3 = <double *>malloc(r_len * sizeof(double))
+
   cdef Py_ssize_t k
   for k in range(r_len):
-    r3_view[k] = r2[k]
-  
-  #cdef double* r3_ptr = &r3_view[0]
-  #cdef int r3_length = r3_view.shape[0]
+    r3[k] = r2[k]
 
   # Sort the memoryview
-  sort_memview(r3_view)
-  reverse_memview(r3_view) 
+  #sort_memview(r3_view)
+  #reverse_memview(r3_view) 
+  sort(r3, r3 + r_len)
+  custom_reverse(r3, r_len)
+  #reverse(r3, r3 + r_len)
+  
   # Sort r2 by r1
   sort2_1(r1, r2, r_len) 
-  
-  cdef double[:] overlaps_view = overlaps
+
+  #cdef double[:] overlaps_view = overlaps
   cdef Py_ssize_t i, j
   #Calculate the overlap
-  #overlaps = fast_ovlp(r2, typed_r3, N_len, N, B, b, overlaps)
+  cdef double sum
   for i in range(N_len):
-    global global_sum    
+    sum = 0      
     for j in range(N[i]):
-      global_sum += (r2[j] <= r3_view[N[i] - 1])
-    overlaps_view[ (b-1) + i*B ] = global_sum / N[i]
-    global_sum = 0
+      sum += (r2[j] >= r3[N[i] - 1])
+    overlaps[ (b-1) + i*B ] = sum / N[i]    
+
+  # Free memory for r3
+  free(r3)
+
 
 cdef void sort_memview(double[:] mv):
   # data = [item for item in mv]  
@@ -138,85 +199,157 @@ cdef void reverse_memview(double[:] mv):
     start += 1
     end -= 1
 
+cdef void custom_reverse(double* arr, int length):
+  cdef int start = 0
+  cdef int end = length - 1
+  while start < end:
+    # Swap elements
+    arr[start], arr[end] = arr[end], arr[start]
+    start += 1
+    end -= 1
+
 # Sort array b based on the array a (decreasingly)
-cdef void sort2_1(double[:] a, double[:] b, int n):
-  #pairs = make_pairs(a, b, n)
-  global pairs
-  pairs = np.empty((n, 2), dtype=np.double)
+cdef void sort2_1(double *a, double *b, int n):    
+  #pairs = np.empty((n, 2), dtype=np.double)
+
+  cdef vector[pair[double, double]] pairs
+  pairs.reserve(n)
   
   cdef Py_ssize_t k
   for k in range(n):
-    pairs[k] = (a[k], b[k])  
+    #pairs[k] = (a[k], b[k])  
+    pairs.push_back( pair[double, double](a[k], b[k]) )
 
   # Sort the pairs (inc). By default pairs are sorted by the first value and
   # in the case of a tie, the second values are used.
-  # Sort the memoryview using std::sort
-  #qsort(pairs_ptr, pairs_length, sizeof(double) * 2, compare_func)
-  pairs = pairs[np.lexsort((pairs[:, 0], pairs[:, 1]))]
-  cdef double[:, :] pairs_view = pairs
+  #pairs = pairs[np.lexsort((pairs[:, 1], pairs[:, 0]))]
+  sort(pairs.begin(), pairs.end())
+  #cdef double[:, :] pairs_view = pairs
 
   cdef Py_ssize_t i
-  # Split the pairs back into the original vectors (dec).
-  #a, b = split_pairs(pairs, n)
+  # Split the pairs back into the original vectors (dec).  
   for i in range(n):
-    a[n-1-i] = pairs_view[i][0]
-    b[n-1-i] = pairs_view[i][1]
+    a[n-1-i] = pairs[i].first#pairs_view[i][0]
+    b[n-1-i] = pairs[i].second#pairs_view[i][1]
+  
+  pairs.clear()
 
-
-def calculateOverlaps2(D, pD, int D_len, int[:] N, int N_len, int B, overlaps, overlaps_P):
-  cdef double[:] D_ovlp = D.ravel()  
-  cdef double[:] pD_ovlp = pD.ravel()  
-  overlaps_ovlp = overlaps.ravel()
-  overlaps_P_ovlp = overlaps_P.ravel()
+@cython.cdivision(True)
+def calculateOverlaps2(double[:,:] D, double[:,:] pD, int D_len, int[:] N, int N_len, int B, double[:,:] overlaps, double[:,:] overlaps_P):
+  cdef vector[double] D_ovlp = flatten_to_vec(D)  
+  cdef vector[double] pD_ovlp = flatten_to_vec(pD)
+  cdef vector[double] overlaps_ovlp = flatten_to_vec(overlaps)
+  #cdef double[:] overlaps_view = overlaps_ovlp
+  cdef vector[double] overlaps_P_ovlp = flatten_to_vec(overlaps_P)
+  #cdef double[:] overlaps_P_view = overlaps_P_ovlp
     
-  res1 = np.zeros(D_len, dtype=np.double)
-  cdef double[:] res1_view = res1
-  res2 = np.zeros(D_len, dtype=np.double)
-  cdef double[:] res2_view = res2
-  pres1 = np.zeros(D_len, dtype=np.double)
-  cdef double[:] pres1_view = pres1
-  pres2 = np.zeros(D_len, dtype=np.double)
-  cdef double[:] pres2_view = pres2
+  # res1 = np.zeros(D_len, dtype=np.double)
+  # cdef double[:] res1_view = res1
+  # res2 = np.zeros(D_len, dtype=np.double)
+  # cdef double[:] res2_view = res2
+  # pres1 = np.zeros(D_len, dtype=np.double)
+  # cdef double[:] pres1_view = pres1
+  # pres2 = np.zeros(D_len, dtype=np.double)
+  # cdef double[:] pres2_view = pres2
+  cdef double *res1 = <double *>malloc(D_len * sizeof(double))
+  cdef double *res2 = <double *>malloc(D_len * sizeof(double))
+  cdef double *pres1 = <double *>malloc(D_len * sizeof(double))
+  cdef double *pres2 = <double *>malloc(D_len * sizeof(double))
 
   cdef Py_ssize_t b,i
   for b in range(1, B):
     #res1, res2, pres1, pres2 = fast_make_res(res1, res2, pres1, pres2, D_ovlp, S_ovlp, pD_ovlp, pS_ovlp, D_len, ssq_i, b, B)
     for i in range(D_len):
-      res1_view[i] = np.abs( D_ovlp[(b-1) * D_len + i] )
-      res2_view[i] = np.abs( D_ovlp[(b + B - 1) * D_len + i] )
-      pres1_view[i] = np.abs( pD_ovlp[(b-1) * D_len + i] )
-      pres2_view[i] = np.abs( pD_ovlp[(b + B - 1) * D_len + i] )
+      res1[i] = fabs( D_ovlp[(b-1) * D_len + i] )
+      res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] )
+      pres1[i] = fabs( pD_ovlp[(b-1) * D_len + i] )
+      pres2[i] = fabs( pD_ovlp[(b + B - 1) * D_len + i] )
             
-    calculateOverlap_2(res1_view, res2_view, D_len, N, N_len, b, B, overlaps_ovlp)
-    calculateOverlap_2(pres1_view, pres2_view, D_len, N, N_len, b, B, overlaps_P_ovlp)
+    calculateOverlap_2(res1, res2, D_len, N, N_len, b, B, overlaps_ovlp)
+    calculateOverlap_2(pres1, pres2, D_len, N, N_len, b, B, overlaps_P_ovlp)
 
-  return {'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)} 
+  free(res1)
+  free(res2)
+  free(pres1)
+  free(pres2)
+
+  # Reshape the vectors to 2D using NumPy
+  #cdef np.ndarray[np.double_t, ndim=2] overlaps_reshaped = np.reshape(overlaps_ovlp, (B, N_len))
+  #cdef np.ndarray[np.double_t, ndim=2] overlaps_P_reshaped = np.reshape(overlaps_P_ovlp, (B, N_len))
+
+  cdef dict result = {
+        "overlaps": np.reshape(overlaps_ovlp, (B, N_len)),
+        "overlaps_P": np.reshape(overlaps_P_ovlp, (B, N_len)),
+    }
+  return result #{'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)} 
 
 # Calculate the overlap
-cpdef void calculateOverlap_2(double[:] r1, double[:] r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, overlaps):
+cdef void calculateOverlap_2(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):
    # Copy r2 and sort the copy.
-  r3 = np.zeros(r_len, dtype=np.double)
-  cdef double[:] r3_view = r3
+  #r3 = np.zeros(r_len, dtype=np.double)
+  #cdef double[:] r3_view = r3
+  cdef double *r3 = <double *>malloc(r_len * sizeof(double))
+
   cdef Py_ssize_t k
   for k in range(r_len):
-    r3_view[k] = r2[k]
+    r3[k] = r2[k]
   
-  #cdef double* r3_ptr = &r3_view[0]
-  #cdef int r3_length = r3_view.shape[0]
-
   # Sort the memoryview
-  sort_memview(r3_view)
-  reverse_memview(r3_view) 
+  #sort_memview(r3_view)
+  #reverse_memview(r3_view) 
+  sort(r3, r3 + r_len)
+  custom_reverse(r3, r_len)
+
   # Sort r2 by r1
-  sort2_1(r1, r2, r_len) 
+  sort2_2(r1, r2, r_len) 
   
-  cdef double[:] overlaps_view = overlaps
+  #cdef double[:] overlaps_view = overlaps
   cdef Py_ssize_t i, j
+  cdef double sum
   #Calculate the overlap
-  #overlaps = fast_ovlp(r2, typed_r3, N_len, N, B, b, overlaps)
   for i in range(N_len):
-    global global_sum    
+    sum = 0
     for j in range(N[i]):
-      global_sum += (r2[j] >= r3_view[N[i] - 1])
-    overlaps_view[ (b-1) + i*B ] = global_sum / N[i]
-    global_sum = 0
+      sum += (r2[j] >= r3[N[i] - 1])
+    overlaps[ (b-1) + i*B ] = sum / N[i]
+    sum = 0
+  free(r3)
+
+cdef vector[double] flatten_to_vec(double[:, :] arr):
+    cdef Py_ssize_t rows = arr.shape[0]
+    cdef Py_ssize_t cols = arr.shape[1]
+    
+    cdef vector[double] vec
+    cdef Py_ssize_t i, j
+    
+    for i in range(rows):
+        for j in range(cols):
+            vec.push_back(arr[i, j])
+    
+    return vec
+
+# Sort array b based on the array a (decreasingly)
+cdef void sort2_2(double *a, double *b, int n):    
+  #pairs = np.empty((n, 2), dtype=np.double)
+
+  cdef vector[pair[double, double]] pairs
+  pairs.reserve(n)
+  
+  cdef Py_ssize_t k
+  for k in range(n):
+    #pairs[k] = (a[k], b[k])  
+    pairs.push_back( pair[double, double](a[k], b[k]) )
+
+  # Sort the pairs (inc). By default pairs are sorted by the first value and
+  # in the case of a tie, the second values are used.
+  #pairs = pairs[np.lexsort((pairs[:, 1], pairs[:, 0]))]
+  sort(pairs.begin(), pairs.end())
+  #cdef double[:, :] pairs_view = pairs
+
+  cdef Py_ssize_t i
+  # Split the pairs back into the original vectors (dec).  
+  for i in range(n):
+    a[n-1-i] = pairs[i].first#pairs_view[i][0]
+    b[n-1-i] = pairs[i].second#pairs_view[i][1]
+  
+  pairs.clear()

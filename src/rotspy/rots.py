@@ -4,9 +4,9 @@ import pandas as pd
 from tqdm import tqdm
 import random
 
-from helpers import bootstrapSamples, permutatedSamples, testStatistic, calculateP, calculateFDR
-from calculateOverlaps1 import calculateOverlaps1
-from calculateOverlaps2 import calculateOverlaps2
+from rotspy.helpers import bootstrapSamples, permutatedSamples, testStatistic, calculateP, calculateFDR
+#from calculateOverlaps1 import calculateOverlaps1
+#from calculateOverlaps2 import calculateOverlaps2
 from optim_cy import optim
 
 def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None, log=False, progress=False, verbose=True):
@@ -38,6 +38,8 @@ def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None,
     np.arange(21, 41) * 25, 
     np.arange(11, 1001) * 100
   ])
+
+  ssq = np.array(["%.2f" % x for x in ssq])
     
   ## Check for top list size K
   if K is None:
@@ -57,7 +59,7 @@ def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None,
     groups_levels = None
 
   ## Reorder the data according to the group labels and check for NA rows.
-  data = data.iloc[:, np.argsort(groups)]
+  data = data.iloc[:, np.argsort(groups, kind='mergesort')]
   groups = np.sort(groups)
   
   for i in np.unique(groups):
@@ -93,7 +95,7 @@ def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None,
 
   samples = bootstrapSamples(2*B, cl, paired)
   ## Permutated samples
-  pSamples = permutatedSamples(len(samples), cl)
+  pSamples = permutatedSamples(samples.shape[0], cl)
 
   ## Test statistics in the bootstrap (permutate) datasets.
   ## For each bootstrap (permutated) dataset, determine the signal log-ratio
@@ -118,11 +120,12 @@ def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None,
       D[:,i] = fit['d']
       S[:,i] = fit['s']
     
-      
+
     pFit = testStatistic(paired, [data.iloc[:, x].to_numpy() for x in pSamples_R])
     pD[:,i] = pFit['d']
-    pS[:,i] = pFit['s']
-    
+    pS[:,i] = pFit['s']        
+
+    #assert False, "STOP"  
     if progress: 
       pb.update()
     
@@ -171,7 +174,7 @@ def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None,
 
       
       cResults = optim.calculateOverlaps1(D, S, pD, pS, len(D), N.astype(int), len(N),
-                        ssq[i], int(B), overlaps, overlaps_P)
+                        float(ssq[i]), int(B), overlaps, overlaps_P)            
       
       ## Colmeans & rowMeans are a lot faster than apply
       #         reprotable[i, ] <- colMeans(overlaps)
@@ -185,9 +188,9 @@ def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None,
       #         reprotable.sd[i,] <- sqrt(rowSums((t(overlaps) - reprotable[i,])^2) /
       #                                     (nrow(overlaps) - 1))
       #sqrt(rowSums((t(cResults[["overlaps"]]) - reprotable[i,])^2) / (nrow(cResults[["overlaps"]]) - 1)) 
-      #reprotable_sd.iloc[i] = np.std(cResults["overlaps"])
-      reprotable_sd.iloc[i] = np.sqrt(np.sum((cResults["overlaps"].T - reprotable.iloc[i].values[0])**2, axis=1) / 
-                                      (cResults["overlaps"].shape[0] - 1))[0]
+      reprotable_sd.iloc[i] = np.std(cResults["overlaps"], axis=0)
+      #reprotable_sd.iloc[i] = np.sqrt(np.sum((cResults["overlaps"] - reprotable.iloc[i].values)**2, axis=0) / 
+      #                                (cResults["overlaps"].shape[0] - 1))
       
       if progress:
         pb.update()      
@@ -208,9 +211,9 @@ def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None,
     reprotable_P.iloc[i] = np.mean(cResults["overlaps_P"], axis=0)
     ## Standard deviation for each column
     #sqrt(rowSums((t(cResults[["overlaps"]]) - reprotable[i,])^2) / (nrow(cResults[["overlaps"]]) - 1))
-    #reprotable_sd.iloc[i] = np.std(cResults["overlaps"])
-    reprotable_sd.iloc[i] = np.sqrt(np.sum((cResults["overlaps"].T - reprotable.iloc[i].values[0])**2, axis=1) / 
-                                      (cResults["overlaps"].shape[0] - 1))[0]
+    reprotable_sd.iloc[i] = np.std(cResults["overlaps"], axis=0)
+    #reprotable_sd.iloc[i] = np.sqrt(np.sum((cResults["overlaps"] - reprotable.iloc[i].values)**2, axis=0) / 
+    #                                  (cResults["overlaps"].shape[0] - 1))
 
     ## -------------------------------------------------------------------------
 
@@ -220,25 +223,26 @@ def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None,
     ztable = (reprotable - reprotable_P) / reprotable_sd    
     ztable = ztable.infer_objects()    
     
-    sel = np.unravel_index(np.argmax(ztable[np.isfinite(ztable)]), ztable.shape) #np.where(ztable == max(ztable[is.finite(ztable)]), arr.ind=TRUE)
+    indices = np.where(ztable == np.nanmax(ztable[np.isfinite(ztable)]))
+    sel = list(zip(indices[0], indices[1]))#np.unravel_index(np.argmax(ztable[np.isfinite(ztable)]), ztable.shape)
     ## Sel is a matrix containing the location(s) of the largest value (row,
     ## col). If the location of the largest value is not unique then nrow(sel)
     ## > 2 (length(sel) > 2)
     
-    if len(sel) > 2:
-      sel = sel[0:2]
+    if len(sel) > 1:
+      sel = [sel[0]]
 
-    if sel[0] < len(reprotable)-1:
-      a1 = float(reprotable.index[sel[0]])
+    if sel[0][0] < reprotable.shape[0]-1:
+      a1 = float(reprotable.index[sel[0][0]])
       a2 = 1
     
-    if sel[0] == len(reprotable)-1:
+    if sel[0][0] == reprotable.shape[0]-1:
       a1 = 1
       a2 = 0
     
-    k = int(reprotable.columns[sel[1]])
-    R = reprotable.iloc[sel[0],sel[1]]
-    Z = ztable.iloc[sel[0],sel[1]]
+    k = int(reprotable.columns[sel[0][1]])
+    R = reprotable.iloc[sel[0][0],sel[0][1]]
+    Z = ztable.iloc[sel[0][0],sel[0][1]]
    
     ## Calculate the reproducibility-optimized test statistic based on the
     ## reproducibility-maximizing a1, a2 and k values and the corresponding FDR      
@@ -257,9 +261,6 @@ def rots(data, groups, B=500, K=None, paired=False, seed=None, a1=None, a2=None,
     if verbose:
       print("Calculating FDR")
     FDR = calculateFDR(d, pD, progress)
-    
-    ## Free up memory
-    #del pD
 
     ROTS_output = {
       "data": data,

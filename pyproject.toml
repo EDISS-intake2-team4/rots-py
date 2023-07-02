@@ -1,8 +1,12 @@
 # pyproject.toml
 
+[build-system]
+requires      = ['setuptools>=58.1.0', 'wheel', 'importlib-metadata >= 1.0 ; python_version < "3.8"']
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "rots-py"
-version = "1.2.0"
+version = "1.2.2"
 description = "ROTS gene ranking implementation in Python"
 readme = "README.md"
 authors = [{ name = "F.Mamadbekov, M.Shakya, A.Montoya, I.Ul-Haq", email = "fmamadbe@abo.fi" }]
@@ -14,12 +18,16 @@ classifiers = [
 ]
 keywords = ["rots", "gene", "ranking"]
 dependencies = [
+    "scikit-learn>=1.2.0",
+    "seaborn>=0.12.2",
+    "openpyxl>=3.1.2",
     "numba >= 0.56.4",
-    "numpy",
-    "pandas",
     "tqdm>=4.64.1",
 ]
 requires-python = ">=3.6"
+
+[tool.setuptools.dynamic]
+version = {attr = "package.__version__"}
 
 [project.urls]
 Homepage = "https://github.com/EDISS-intake2-team4/rots-py"

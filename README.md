@@ -40,6 +40,7 @@ plot_rots(result, fdr=0.05, type="volcano")
 ```
 
 # Methods
+
 ## rots(...)
 Runs the ROTS analysis on the given data. Returns a Python dictionary.
 

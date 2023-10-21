@@ -18,14 +18,14 @@ classifiers = [
 ]
 keywords = ["rots", "gene", "ranking"]
 dependencies = [
-    "scikit-learn>=1.2.0",
+    "scikit-learn>=1.2.2",
     "seaborn>=0.12.2",
     "openpyxl>=3.1.2",
     "numba >= 0.56.4",
     "tqdm>=4.64.1",
-    "numpy>=1.26.1",
-    "pandas>=2.1.1",
-    "matplotlib>=3.8.0",
+    "numpy>=1.24.3",
+    "pandas>=2.0.3",
+    "matplotlib>=3.7.3",
     "Cython>=3.0.4"
 ]
 requires-python = ">=3.6"

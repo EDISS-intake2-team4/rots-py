@@ -137,8 +137,9 @@ cdef double[:] flatten(double[:,:] arr):
       k += 1
   return res
 
+cdef double sum = 0
 # Calculate the overlap
-cdef void calculateOverlap_1(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):
+cdef void calculateOverlap_1(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):  
   # Copy r2 and sort the copy.
   #r3 = np.zeros(r_len, dtype=np.double)
   #cdef double[:] r3_view = r3
@@ -160,16 +161,17 @@ cdef void calculateOverlap_1(double *r1, double *r2, int r_len, int[:] N, int N_
 
   #cdef double[:] overlaps_view = overlaps
   cdef Py_ssize_t i, j
-  #Calculate the overlap
-  cdef double sum
+  #Calculate the overlap  
   for i in range(N_len):
-    sum = 0      
+    global sum   
     for j in range(N[i]):
-      sum += (r2[j] >= r3[N[i] - 1])
+      if r2[j] >= r3[N[i] - 1]:
+        sum = sum + 1
     overlaps[ (b-1) + i*B ] = sum / N[i]    
-
+    sum = 0
   # Free memory for r3
   free(r3)
+
 
 
 cdef void sort_memview(double[:] mv):
@@ -283,9 +285,10 @@ def calculateOverlaps2(double[:,:] D, double[:,:] pD, int D_len, int[:] N, int N
     }
   return result #{'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)} 
 
+cdef double sum_1 = 0
 # Calculate the overlap
 cdef void calculateOverlap_2(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):
-   # Copy r2 and sort the copy.
+  # Copy r2 and sort the copy.
   #r3 = np.zeros(r_len, dtype=np.double)
   #cdef double[:] r3_view = r3
   cdef double *r3 = <double *>malloc(r_len * sizeof(double))
@@ -305,15 +308,17 @@ cdef void calculateOverlap_2(double *r1, double *r2, int r_len, int[:] N, int N_
   
   #cdef double[:] overlaps_view = overlaps
   cdef Py_ssize_t i, j
-  cdef double sum
   #Calculate the overlap
   for i in range(N_len):
-    sum = 0
+    global sum_1
     for j in range(N[i]):
-      sum += (r2[j] >= r3[N[i] - 1])
-    overlaps[ (b-1) + i*B ] = sum / N[i]
-    sum = 0
+      if r2[j] >= r3[N[i] - 1]:
+        sum_1 = sum_1 + 1
+    overlaps[ (b-1) + i*B ] = sum_1 / N[i]
+    sum_1 = 0
   free(r3)
+
+
 
 cdef vector[double] flatten_to_vec(double[:, :] arr):
     cdef Py_ssize_t rows = arr.shape[0]

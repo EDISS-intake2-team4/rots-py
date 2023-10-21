@@ -812,6 +812,7 @@ static CYTHON_INLINE float __PYX_NAN() {
     
 #include <algorithm>
 #include <stdlib.h>
+#include <math.h>
 #include "stdlib.h"
 #include "pythread.h"
 #include "pystate.h"
@@ -2412,11 +2413,15 @@ static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 
 /* Module declarations from 'libc.stdlib' */
 
+/* Module declarations from 'libc.math' */
+
 /* Module declarations from 'optim' */
 static PyTypeObject *__pyx_array_type = 0;
 static PyTypeObject *__pyx_MemviewEnum_type = 0;
 static PyTypeObject *__pyx_memoryview_type = 0;
 static PyTypeObject *__pyx_memoryviewslice_type = 0;
+static double __pyx_v_5optim_sum;
+static double __pyx_v_5optim_sum_1;
 static PyObject *generic = 0;
 static PyObject *strided = 0;
 static PyObject *indirect = 0;
@@ -2840,7 +2845,7 @@ static PyObject *__pyx_codeobj__27;
 static PyObject *__pyx_codeobj__34;
 /* Late includes */
 
-/* "optim.pyx":17
+/* "optim.pyx":18
  *   void qsort(void* base, size_t nmemb, size_t size, int (*compar)(const void*, const void*))
  * 
  * cdef void print_array(double* arr, int length):             # <<<<<<<<<<<<<<
@@ -2861,7 +2866,7 @@ static void __pyx_f_5optim_print_array(double *__pyx_v_arr, int __pyx_v_length) 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("print_array", 0);
 
-  /* "optim.pyx":19
+  /* "optim.pyx":20
  * cdef void print_array(double* arr, int length):
  *   cdef Py_ssize_t i
  *   for i in range(length):             # <<<<<<<<<<<<<<
@@ -2873,22 +2878,22 @@ static void __pyx_f_5optim_print_array(double *__pyx_v_arr, int __pyx_v_length) 
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "optim.pyx":20
+    /* "optim.pyx":21
  *   cdef Py_ssize_t i
  *   for i in range(length):
  *     print(arr[i])             # <<<<<<<<<<<<<<
  * 
  * cdef int compare_func(const void* a, const void* b):
  */
-    __pyx_t_4 = PyFloat_FromDouble((__pyx_v_arr[__pyx_v_i])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble((__pyx_v_arr[__pyx_v_i])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
 
-  /* "optim.pyx":17
+  /* "optim.pyx":18
  *   void qsort(void* base, size_t nmemb, size_t size, int (*compar)(const void*, const void*))
  * 
  * cdef void print_array(double* arr, int length):             # <<<<<<<<<<<<<<
@@ -2906,7 +2911,7 @@ static void __pyx_f_5optim_print_array(double *__pyx_v_arr, int __pyx_v_length) 
   __Pyx_RefNannyFinishContext();
 }
 
-/* "optim.pyx":22
+/* "optim.pyx":23
  *     print(arr[i])
  * 
  * cdef int compare_func(const void* a, const void* b):             # <<<<<<<<<<<<<<
@@ -2922,7 +2927,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("compare_func", 0);
 
-  /* "optim.pyx":23
+  /* "optim.pyx":24
  * 
  * cdef int compare_func(const void* a, const void* b):
  *   cdef double element_a = (<double*>a)[0]             # <<<<<<<<<<<<<<
@@ -2931,7 +2936,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
  */
   __pyx_v_element_a = (((double *)__pyx_v_a)[0]);
 
-  /* "optim.pyx":24
+  /* "optim.pyx":25
  * cdef int compare_func(const void* a, const void* b):
  *   cdef double element_a = (<double*>a)[0]
  *   cdef double element_b = (<double*>b)[0]             # <<<<<<<<<<<<<<
@@ -2940,7 +2945,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
  */
   __pyx_v_element_b = (((double *)__pyx_v_b)[0]);
 
-  /* "optim.pyx":25
+  /* "optim.pyx":26
  *   cdef double element_a = (<double*>a)[0]
  *   cdef double element_b = (<double*>b)[0]
  *   if element_a < element_b:             # <<<<<<<<<<<<<<
@@ -2950,7 +2955,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
   __pyx_t_1 = ((__pyx_v_element_a < __pyx_v_element_b) != 0);
   if (__pyx_t_1) {
 
-    /* "optim.pyx":26
+    /* "optim.pyx":27
  *   cdef double element_b = (<double*>b)[0]
  *   if element_a < element_b:
  *       return -1             # <<<<<<<<<<<<<<
@@ -2960,7 +2965,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "optim.pyx":25
+    /* "optim.pyx":26
  *   cdef double element_a = (<double*>a)[0]
  *   cdef double element_b = (<double*>b)[0]
  *   if element_a < element_b:             # <<<<<<<<<<<<<<
@@ -2969,7 +2974,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
  */
   }
 
-  /* "optim.pyx":27
+  /* "optim.pyx":28
  *   if element_a < element_b:
  *       return -1
  *   elif element_a > element_b:             # <<<<<<<<<<<<<<
@@ -2979,7 +2984,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
   __pyx_t_1 = ((__pyx_v_element_a > __pyx_v_element_b) != 0);
   if (__pyx_t_1) {
 
-    /* "optim.pyx":28
+    /* "optim.pyx":29
  *       return -1
  *   elif element_a > element_b:
  *       return 1             # <<<<<<<<<<<<<<
@@ -2989,7 +2994,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "optim.pyx":27
+    /* "optim.pyx":28
  *   if element_a < element_b:
  *       return -1
  *   elif element_a > element_b:             # <<<<<<<<<<<<<<
@@ -2998,7 +3003,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
  */
   }
 
-  /* "optim.pyx":30
+  /* "optim.pyx":31
  *       return 1
  *   else:
  *       return 0             # <<<<<<<<<<<<<<
@@ -3010,7 +3015,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
     goto __pyx_L0;
   }
 
-  /* "optim.pyx":22
+  /* "optim.pyx":23
  *     print(arr[i])
  * 
  * cdef int compare_func(const void* a, const void* b):             # <<<<<<<<<<<<<<
@@ -3024,7 +3029,7 @@ static int __pyx_f_5optim_compare_func(void const *__pyx_v_a, void const *__pyx_
   return __pyx_r;
 }
 
-/* "optim.pyx":47
+/* "optim.pyx":48
  * 
  * #@cython.boundscheck(False)  # Deactivate bounds checking
  * def pvalue(double[:] observed, double[:] permuted):             # <<<<<<<<<<<<<<
@@ -3067,11 +3072,11 @@ static PyObject *__pyx_pw_5optim_1pvalue(PyObject *__pyx_self, PyObject *__pyx_a
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_permuted)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("pvalue", 1, 2, 2, 1); __PYX_ERR(0, 47, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("pvalue", 1, 2, 2, 1); __PYX_ERR(0, 48, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "pvalue") < 0)) __PYX_ERR(0, 47, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "pvalue") < 0)) __PYX_ERR(0, 48, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -3079,12 +3084,12 @@ static PyObject *__pyx_pw_5optim_1pvalue(PyObject *__pyx_self, PyObject *__pyx_a
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_observed = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_observed.memview)) __PYX_ERR(0, 47, __pyx_L3_error)
-    __pyx_v_permuted = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_permuted.memview)) __PYX_ERR(0, 47, __pyx_L3_error)
+    __pyx_v_observed = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_observed.memview)) __PYX_ERR(0, 48, __pyx_L3_error)
+    __pyx_v_permuted = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_permuted.memview)) __PYX_ERR(0, 48, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("pvalue", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 47, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("pvalue", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 48, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("optim.pvalue", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3131,7 +3136,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
   __pyx_pybuffernd_pvalues_array.data = NULL;
   __pyx_pybuffernd_pvalues_array.rcbuffer = &__pyx_pybuffer_pvalues_array;
 
-  /* "optim.pyx":48
+  /* "optim.pyx":49
  * #@cython.boundscheck(False)  # Deactivate bounds checking
  * def pvalue(double[:] observed, double[:] permuted):
  *   cdef Py_ssize_t a_max = observed.shape[0]             # <<<<<<<<<<<<<<
@@ -3140,7 +3145,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
  */
   __pyx_v_a_max = (__pyx_v_observed.shape[0]);
 
-  /* "optim.pyx":49
+  /* "optim.pyx":50
  * def pvalue(double[:] observed, double[:] permuted):
  *   cdef Py_ssize_t a_max = observed.shape[0]
  *   cdef Py_ssize_t b_max = permuted.shape[0]             # <<<<<<<<<<<<<<
@@ -3149,7 +3154,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
  */
   __pyx_v_b_max = (__pyx_v_permuted.shape[0]);
 
-  /* "optim.pyx":52
+  /* "optim.pyx":53
  *   #pvalues = np.zeros(a_max, dtype=np.double)
  *   #cdef double[:] pvalues_view = pvalues
  *   cdef double *pvalues = <double *>malloc(a_max * sizeof(double))             # <<<<<<<<<<<<<<
@@ -3158,7 +3163,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
  */
   __pyx_v_pvalues = ((double *)malloc((__pyx_v_a_max * (sizeof(double)))));
 
-  /* "optim.pyx":55
+  /* "optim.pyx":56
  * 
  *   cdef Py_ssize_t i
  *   cdef int j = 0             # <<<<<<<<<<<<<<
@@ -3167,7 +3172,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
  */
   __pyx_v_j = 0;
 
-  /* "optim.pyx":56
+  /* "optim.pyx":57
  *   cdef Py_ssize_t i
  *   cdef int j = 0
  *   for i in range(a_max):             # <<<<<<<<<<<<<<
@@ -3179,7 +3184,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "optim.pyx":57
+    /* "optim.pyx":58
  *   cdef int j = 0
  *   for i in range(a_max):
  *     while permuted[j] >= observed[i] and j < b_max:             # <<<<<<<<<<<<<<
@@ -3195,7 +3200,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
       } else if (unlikely(__pyx_t_5 >= __pyx_v_permuted.shape[0])) __pyx_t_6 = 0;
       if (unlikely(__pyx_t_6 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_6);
-        __PYX_ERR(0, 57, __pyx_L1_error)
+        __PYX_ERR(0, 58, __pyx_L1_error)
       }
       __pyx_t_7 = __pyx_v_i;
       __pyx_t_6 = -1;
@@ -3205,7 +3210,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
       } else if (unlikely(__pyx_t_7 >= __pyx_v_observed.shape[0])) __pyx_t_6 = 0;
       if (unlikely(__pyx_t_6 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_6);
-        __PYX_ERR(0, 57, __pyx_L1_error)
+        __PYX_ERR(0, 58, __pyx_L1_error)
       }
       __pyx_t_8 = (((*((double *) ( /* dim=0 */ (__pyx_v_permuted.data + __pyx_t_5 * __pyx_v_permuted.strides[0]) ))) >= (*((double *) ( /* dim=0 */ (__pyx_v_observed.data + __pyx_t_7 * __pyx_v_observed.strides[0]) )))) != 0);
       if (__pyx_t_8) {
@@ -3218,7 +3223,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
       __pyx_L7_bool_binop_done:;
       if (!__pyx_t_4) break;
 
-      /* "optim.pyx":58
+      /* "optim.pyx":59
  *   for i in range(a_max):
  *     while permuted[j] >= observed[i] and j < b_max:
  *       j += 1             # <<<<<<<<<<<<<<
@@ -3228,7 +3233,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
       __pyx_v_j = (__pyx_v_j + 1);
     }
 
-    /* "optim.pyx":59
+    /* "optim.pyx":60
  *     while permuted[j] >= observed[i] and j < b_max:
  *       j += 1
  *     pvalues[i] = float(j) / b_max             # <<<<<<<<<<<<<<
@@ -3237,51 +3242,51 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
  */
     if (unlikely(__pyx_v_b_max == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 59, __pyx_L1_error)
+      __PYX_ERR(0, 60, __pyx_L1_error)
     }
     (__pyx_v_pvalues[__pyx_v_i]) = (((double)__pyx_v_j) / ((double)__pyx_v_b_max));
   }
 
-  /* "optim.pyx":62
+  /* "optim.pyx":63
  * 
  *   # Convert the C-style array to a NumPy array
  *   cdef np.ndarray[np.double_t] pvalues_array = np.empty(a_max, dtype=np.double)             # <<<<<<<<<<<<<<
  *   for i in range(a_max):
  *     pvalues_array[i] = pvalues[i]
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_empty); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_empty); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = PyInt_FromSsize_t(__pyx_v_a_max); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_9 = PyInt_FromSsize_t(__pyx_v_a_max); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_11 = PyTuple_New(1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_11 = PyTuple_New(1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __Pyx_GIVEREF(__pyx_t_9);
   PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_9);
   __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_np); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_np); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
-  __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_double); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_double); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
   __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-  if (PyDict_SetItem(__pyx_t_9, __pyx_n_s_dtype, __pyx_t_13) < 0) __PYX_ERR(0, 62, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_9, __pyx_n_s_dtype, __pyx_t_13) < 0) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-  __pyx_t_13 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_11, __pyx_t_9); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_13 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_11, __pyx_t_9); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  if (!(likely(((__pyx_t_13) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_13, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 62, __pyx_L1_error)
+  if (!(likely(((__pyx_t_13) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_13, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 63, __pyx_L1_error)
   __pyx_t_14 = ((PyArrayObject *)__pyx_t_13);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_pvalues_array.rcbuffer->pybuffer, (PyObject*)__pyx_t_14, &__Pyx_TypeInfo_nn___pyx_t_5numpy_double_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_pvalues_array = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_pvalues_array.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 62, __pyx_L1_error)
+      __PYX_ERR(0, 63, __pyx_L1_error)
     } else {__pyx_pybuffernd_pvalues_array.diminfo[0].strides = __pyx_pybuffernd_pvalues_array.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_pvalues_array.diminfo[0].shape = __pyx_pybuffernd_pvalues_array.rcbuffer->pybuffer.shape[0];
     }
   }
@@ -3289,7 +3294,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
   __pyx_v_pvalues_array = ((PyArrayObject *)__pyx_t_13);
   __pyx_t_13 = 0;
 
-  /* "optim.pyx":63
+  /* "optim.pyx":64
  *   # Convert the C-style array to a NumPy array
  *   cdef np.ndarray[np.double_t] pvalues_array = np.empty(a_max, dtype=np.double)
  *   for i in range(a_max):             # <<<<<<<<<<<<<<
@@ -3301,7 +3306,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "optim.pyx":64
+    /* "optim.pyx":65
  *   cdef np.ndarray[np.double_t] pvalues_array = np.empty(a_max, dtype=np.double)
  *   for i in range(a_max):
  *     pvalues_array[i] = pvalues[i]             # <<<<<<<<<<<<<<
@@ -3316,12 +3321,12 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
     } else if (unlikely(__pyx_t_7 >= __pyx_pybuffernd_pvalues_array.diminfo[0].shape)) __pyx_t_6 = 0;
     if (unlikely(__pyx_t_6 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 64, __pyx_L1_error)
+      __PYX_ERR(0, 65, __pyx_L1_error)
     }
     *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_double_t *, __pyx_pybuffernd_pvalues_array.rcbuffer->pybuffer.buf, __pyx_t_7, __pyx_pybuffernd_pvalues_array.diminfo[0].strides) = (__pyx_v_pvalues[__pyx_v_i]);
   }
 
-  /* "optim.pyx":67
+  /* "optim.pyx":68
  * 
  *   # Free the memory allocated for pvalues
  *   free(pvalues)             # <<<<<<<<<<<<<<
@@ -3330,7 +3335,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
  */
   free(__pyx_v_pvalues);
 
-  /* "optim.pyx":69
+  /* "optim.pyx":70
  *   free(pvalues)
  * 
  *   return pvalues_array             # <<<<<<<<<<<<<<
@@ -3342,7 +3347,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
   __pyx_r = ((PyObject *)__pyx_v_pvalues_array);
   goto __pyx_L0;
 
-  /* "optim.pyx":47
+  /* "optim.pyx":48
  * 
  * #@cython.boundscheck(False)  # Deactivate bounds checking
  * def pvalue(double[:] observed, double[:] permuted):             # <<<<<<<<<<<<<<
@@ -3377,7 +3382,7 @@ static PyObject *__pyx_pf_5optim_pvalue(CYTHON_UNUSED PyObject *__pyx_self, __Py
   return __pyx_r;
 }
 
-/* "optim.pyx":72
+/* "optim.pyx":73
  * 
  * @cython.cdivision(True)
  * def calculateOverlaps1(double[:,:] D, double[:,:] S, double[:,:] pD, double[:,:] pS, int D_len, int[:] N, int N_len, double ssq_i, int B, double[:,:] overlaps, double[:,:] overlaps_P):             # <<<<<<<<<<<<<<
@@ -3447,65 +3452,65 @@ static PyObject *__pyx_pw_5optim_3calculateOverlaps1(PyObject *__pyx_self, PyObj
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_S)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 1); __PYX_ERR(0, 72, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 1); __PYX_ERR(0, 73, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pD)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 2); __PYX_ERR(0, 72, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 2); __PYX_ERR(0, 73, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pS)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 3); __PYX_ERR(0, 72, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 3); __PYX_ERR(0, 73, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_D_len)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 4); __PYX_ERR(0, 72, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 4); __PYX_ERR(0, 73, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_N)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 5); __PYX_ERR(0, 72, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 5); __PYX_ERR(0, 73, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_N_len)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 6); __PYX_ERR(0, 72, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 6); __PYX_ERR(0, 73, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ssq_i)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 7); __PYX_ERR(0, 72, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 7); __PYX_ERR(0, 73, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_B)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 8); __PYX_ERR(0, 72, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 8); __PYX_ERR(0, 73, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_overlaps)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 9); __PYX_ERR(0, 72, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 9); __PYX_ERR(0, 73, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_overlaps_P)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 10); __PYX_ERR(0, 72, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, 10); __PYX_ERR(0, 73, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "calculateOverlaps1") < 0)) __PYX_ERR(0, 72, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "calculateOverlaps1") < 0)) __PYX_ERR(0, 73, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 11) {
       goto __pyx_L5_argtuple_error;
@@ -3522,21 +3527,21 @@ static PyObject *__pyx_pw_5optim_3calculateOverlaps1(PyObject *__pyx_self, PyObj
       values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
       values[10] = PyTuple_GET_ITEM(__pyx_args, 10);
     }
-    __pyx_v_D = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_D.memview)) __PYX_ERR(0, 72, __pyx_L3_error)
-    __pyx_v_S = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_S.memview)) __PYX_ERR(0, 72, __pyx_L3_error)
-    __pyx_v_pD = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pD.memview)) __PYX_ERR(0, 72, __pyx_L3_error)
-    __pyx_v_pS = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pS.memview)) __PYX_ERR(0, 72, __pyx_L3_error)
-    __pyx_v_D_len = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_D_len == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 72, __pyx_L3_error)
-    __pyx_v_N = __Pyx_PyObject_to_MemoryviewSlice_ds_int(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v_N.memview)) __PYX_ERR(0, 72, __pyx_L3_error)
-    __pyx_v_N_len = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_N_len == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 72, __pyx_L3_error)
-    __pyx_v_ssq_i = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_ssq_i == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 72, __pyx_L3_error)
-    __pyx_v_B = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_B == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 72, __pyx_L3_error)
-    __pyx_v_overlaps = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_overlaps.memview)) __PYX_ERR(0, 72, __pyx_L3_error)
-    __pyx_v_overlaps_P = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_overlaps_P.memview)) __PYX_ERR(0, 72, __pyx_L3_error)
+    __pyx_v_D = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_D.memview)) __PYX_ERR(0, 73, __pyx_L3_error)
+    __pyx_v_S = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_S.memview)) __PYX_ERR(0, 73, __pyx_L3_error)
+    __pyx_v_pD = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pD.memview)) __PYX_ERR(0, 73, __pyx_L3_error)
+    __pyx_v_pS = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pS.memview)) __PYX_ERR(0, 73, __pyx_L3_error)
+    __pyx_v_D_len = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_D_len == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 73, __pyx_L3_error)
+    __pyx_v_N = __Pyx_PyObject_to_MemoryviewSlice_ds_int(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v_N.memview)) __PYX_ERR(0, 73, __pyx_L3_error)
+    __pyx_v_N_len = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_N_len == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 73, __pyx_L3_error)
+    __pyx_v_ssq_i = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_ssq_i == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 73, __pyx_L3_error)
+    __pyx_v_B = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_B == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 73, __pyx_L3_error)
+    __pyx_v_overlaps = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_overlaps.memview)) __PYX_ERR(0, 73, __pyx_L3_error)
+    __pyx_v_overlaps_P = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_overlaps_P.memview)) __PYX_ERR(0, 73, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 72, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("calculateOverlaps1", 1, 11, 11, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 73, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("optim.calculateOverlaps1", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3583,7 +3588,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("calculateOverlaps1", 0);
 
-  /* "optim.pyx":77
+  /* "optim.pyx":78
  *   # cdef double[:] pD_ovlp = flatten(pD)
  *   # cdef double[:] pS_ovlp = flatten(pS)
  *   cdef vector[double] D_ovlp = flatten_to_vec(D)             # <<<<<<<<<<<<<<
@@ -3592,7 +3597,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_D_ovlp = __pyx_f_5optim_flatten_to_vec(__pyx_v_D);
 
-  /* "optim.pyx":78
+  /* "optim.pyx":79
  *   # cdef double[:] pS_ovlp = flatten(pS)
  *   cdef vector[double] D_ovlp = flatten_to_vec(D)
  *   cdef vector[double] S_ovlp = flatten_to_vec(S)             # <<<<<<<<<<<<<<
@@ -3601,7 +3606,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_S_ovlp = __pyx_f_5optim_flatten_to_vec(__pyx_v_S);
 
-  /* "optim.pyx":79
+  /* "optim.pyx":80
  *   cdef vector[double] D_ovlp = flatten_to_vec(D)
  *   cdef vector[double] S_ovlp = flatten_to_vec(S)
  *   cdef vector[double] pD_ovlp = flatten_to_vec(pD)             # <<<<<<<<<<<<<<
@@ -3610,7 +3615,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_pD_ovlp = __pyx_f_5optim_flatten_to_vec(__pyx_v_pD);
 
-  /* "optim.pyx":80
+  /* "optim.pyx":81
  *   cdef vector[double] S_ovlp = flatten_to_vec(S)
  *   cdef vector[double] pD_ovlp = flatten_to_vec(pD)
  *   cdef vector[double] pS_ovlp = flatten_to_vec(pS)             # <<<<<<<<<<<<<<
@@ -3619,7 +3624,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_pS_ovlp = __pyx_f_5optim_flatten_to_vec(__pyx_v_pS);
 
-  /* "optim.pyx":81
+  /* "optim.pyx":82
  *   cdef vector[double] pD_ovlp = flatten_to_vec(pD)
  *   cdef vector[double] pS_ovlp = flatten_to_vec(pS)
  *   cdef vector[double] overlaps_ovlp = flatten_to_vec(overlaps)             # <<<<<<<<<<<<<<
@@ -3628,7 +3633,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_overlaps_ovlp = __pyx_f_5optim_flatten_to_vec(__pyx_v_overlaps);
 
-  /* "optim.pyx":82
+  /* "optim.pyx":83
  *   cdef vector[double] pS_ovlp = flatten_to_vec(pS)
  *   cdef vector[double] overlaps_ovlp = flatten_to_vec(overlaps)
  *   cdef vector[double] overlaps_P_ovlp = flatten_to_vec(overlaps_P)             # <<<<<<<<<<<<<<
@@ -3637,7 +3642,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_overlaps_P_ovlp = __pyx_f_5optim_flatten_to_vec(__pyx_v_overlaps_P);
 
-  /* "optim.pyx":94
+  /* "optim.pyx":95
  *   # pres2 = np.zeros(D_len, dtype=np.double)
  *   # cdef double[:] pres2_view = pres2
  *   cdef double *res1 = <double *>malloc(D_len * sizeof(double))             # <<<<<<<<<<<<<<
@@ -3646,7 +3651,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_res1 = ((double *)malloc((__pyx_v_D_len * (sizeof(double)))));
 
-  /* "optim.pyx":95
+  /* "optim.pyx":96
  *   # cdef double[:] pres2_view = pres2
  *   cdef double *res1 = <double *>malloc(D_len * sizeof(double))
  *   cdef double *res2 = <double *>malloc(D_len * sizeof(double))             # <<<<<<<<<<<<<<
@@ -3655,7 +3660,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_res2 = ((double *)malloc((__pyx_v_D_len * (sizeof(double)))));
 
-  /* "optim.pyx":96
+  /* "optim.pyx":97
  *   cdef double *res1 = <double *>malloc(D_len * sizeof(double))
  *   cdef double *res2 = <double *>malloc(D_len * sizeof(double))
  *   cdef double *pres1 = <double *>malloc(D_len * sizeof(double))             # <<<<<<<<<<<<<<
@@ -3664,7 +3669,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_pres1 = ((double *)malloc((__pyx_v_D_len * (sizeof(double)))));
 
-  /* "optim.pyx":97
+  /* "optim.pyx":98
  *   cdef double *res2 = <double *>malloc(D_len * sizeof(double))
  *   cdef double *pres1 = <double *>malloc(D_len * sizeof(double))
  *   cdef double *pres2 = <double *>malloc(D_len * sizeof(double))             # <<<<<<<<<<<<<<
@@ -3673,7 +3678,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_pres2 = ((double *)malloc((__pyx_v_D_len * (sizeof(double)))));
 
-  /* "optim.pyx":100
+  /* "optim.pyx":101
  * 
  *   cdef Py_ssize_t b,i
  *   for b in range(1, B+1):             # <<<<<<<<<<<<<<
@@ -3685,57 +3690,57 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_b = __pyx_t_3;
 
-    /* "optim.pyx":102
+    /* "optim.pyx":103
  *   for b in range(1, B+1):
  *     #res1, res2, pres1, pres2 = fast_make_res(res1, res2, pres1, pres2, D_ovlp, S_ovlp, pD_ovlp, pS_ovlp, D_len, ssq_i, b, B)
  *     for i in range(D_len):             # <<<<<<<<<<<<<<
- *       res1[i] = abs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )
- *       res2[i] = abs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )
+ *       res1[i] = fabs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )
+ *       res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )
  */
     __pyx_t_4 = __pyx_v_D_len;
     __pyx_t_5 = __pyx_t_4;
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
 
-      /* "optim.pyx":103
+      /* "optim.pyx":104
  *     #res1, res2, pres1, pres2 = fast_make_res(res1, res2, pres1, pres2, D_ovlp, S_ovlp, pD_ovlp, pS_ovlp, D_len, ssq_i, b, B)
  *     for i in range(D_len):
- *       res1[i] = abs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )             # <<<<<<<<<<<<<<
- *       res2[i] = abs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )
- *       pres1[i] = abs( pD_ovlp[(b-1) * D_len + i] / (pS_ovlp[(b-1) * D_len + i] + ssq_i))
+ *       res1[i] = fabs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )             # <<<<<<<<<<<<<<
+ *       res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )
+ *       pres1[i] = fabs( pD_ovlp[(b-1) * D_len + i] / (pS_ovlp[(b-1) * D_len + i] + ssq_i))
  */
       (__pyx_v_res1[__pyx_v_i]) = fabs((((double)(__pyx_v_D_ovlp[(((__pyx_v_b - 1) * __pyx_v_D_len) + __pyx_v_i)])) / ((__pyx_v_S_ovlp[(((__pyx_v_b - 1) * __pyx_v_D_len) + __pyx_v_i)]) + __pyx_v_ssq_i)));
 
-      /* "optim.pyx":104
+      /* "optim.pyx":105
  *     for i in range(D_len):
- *       res1[i] = abs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )
- *       res2[i] = abs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )             # <<<<<<<<<<<<<<
- *       pres1[i] = abs( pD_ovlp[(b-1) * D_len + i] / (pS_ovlp[(b-1) * D_len + i] + ssq_i))
- *       pres2[i] = abs( pD_ovlp[(b + B - 1) * D_len + i] / (pS_ovlp[(b + B -1) * D_len + i] + ssq_i))
+ *       res1[i] = fabs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )
+ *       res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )             # <<<<<<<<<<<<<<
+ *       pres1[i] = fabs( pD_ovlp[(b-1) * D_len + i] / (pS_ovlp[(b-1) * D_len + i] + ssq_i))
+ *       pres2[i] = fabs( pD_ovlp[(b + B - 1) * D_len + i] / (pS_ovlp[(b + B -1) * D_len + i] + ssq_i))
  */
       (__pyx_v_res2[__pyx_v_i]) = fabs((((double)(__pyx_v_D_ovlp[((((__pyx_v_b + __pyx_v_B) - 1) * __pyx_v_D_len) + __pyx_v_i)])) / ((__pyx_v_S_ovlp[((((__pyx_v_b + __pyx_v_B) - 1) * __pyx_v_D_len) + __pyx_v_i)]) + __pyx_v_ssq_i)));
 
-      /* "optim.pyx":105
- *       res1[i] = abs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )
- *       res2[i] = abs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )
- *       pres1[i] = abs( pD_ovlp[(b-1) * D_len + i] / (pS_ovlp[(b-1) * D_len + i] + ssq_i))             # <<<<<<<<<<<<<<
- *       pres2[i] = abs( pD_ovlp[(b + B - 1) * D_len + i] / (pS_ovlp[(b + B -1) * D_len + i] + ssq_i))
+      /* "optim.pyx":106
+ *       res1[i] = fabs( D_ovlp[(b-1) * D_len + i] / ( S_ovlp[(b-1) * D_len + i] + ssq_i) )
+ *       res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )
+ *       pres1[i] = fabs( pD_ovlp[(b-1) * D_len + i] / (pS_ovlp[(b-1) * D_len + i] + ssq_i))             # <<<<<<<<<<<<<<
+ *       pres2[i] = fabs( pD_ovlp[(b + B - 1) * D_len + i] / (pS_ovlp[(b + B -1) * D_len + i] + ssq_i))
  * 
  */
       (__pyx_v_pres1[__pyx_v_i]) = fabs((((double)(__pyx_v_pD_ovlp[(((__pyx_v_b - 1) * __pyx_v_D_len) + __pyx_v_i)])) / ((__pyx_v_pS_ovlp[(((__pyx_v_b - 1) * __pyx_v_D_len) + __pyx_v_i)]) + __pyx_v_ssq_i)));
 
-      /* "optim.pyx":106
- *       res2[i] = abs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )
- *       pres1[i] = abs( pD_ovlp[(b-1) * D_len + i] / (pS_ovlp[(b-1) * D_len + i] + ssq_i))
- *       pres2[i] = abs( pD_ovlp[(b + B - 1) * D_len + i] / (pS_ovlp[(b + B -1) * D_len + i] + ssq_i))             # <<<<<<<<<<<<<<
+      /* "optim.pyx":107
+ *       res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] / ( S_ovlp[(b + B - 1) * D_len + i] + ssq_i) )
+ *       pres1[i] = fabs( pD_ovlp[(b-1) * D_len + i] / (pS_ovlp[(b-1) * D_len + i] + ssq_i))
+ *       pres2[i] = fabs( pD_ovlp[(b + B - 1) * D_len + i] / (pS_ovlp[(b + B -1) * D_len + i] + ssq_i))             # <<<<<<<<<<<<<<
  * 
  *     calculateOverlap_1(res1, res2, D_len, N, N_len, b, B, overlaps_ovlp)
  */
       (__pyx_v_pres2[__pyx_v_i]) = fabs((((double)(__pyx_v_pD_ovlp[((((__pyx_v_b + __pyx_v_B) - 1) * __pyx_v_D_len) + __pyx_v_i)])) / ((__pyx_v_pS_ovlp[((((__pyx_v_b + __pyx_v_B) - 1) * __pyx_v_D_len) + __pyx_v_i)]) + __pyx_v_ssq_i)));
     }
 
-    /* "optim.pyx":108
- *       pres2[i] = abs( pD_ovlp[(b + B - 1) * D_len + i] / (pS_ovlp[(b + B -1) * D_len + i] + ssq_i))
+    /* "optim.pyx":109
+ *       pres2[i] = fabs( pD_ovlp[(b + B - 1) * D_len + i] / (pS_ovlp[(b + B -1) * D_len + i] + ssq_i))
  * 
  *     calculateOverlap_1(res1, res2, D_len, N, N_len, b, B, overlaps_ovlp)             # <<<<<<<<<<<<<<
  *     calculateOverlap_1(pres1, pres2, D_len, N, N_len, b, B, overlaps_P_ovlp)
@@ -3743,7 +3748,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
     __pyx_f_5optim_calculateOverlap_1(__pyx_v_res1, __pyx_v_res2, __pyx_v_D_len, __pyx_v_N, __pyx_v_N_len, __pyx_v_b, __pyx_v_B, __pyx_v_overlaps_ovlp);
 
-    /* "optim.pyx":109
+    /* "optim.pyx":110
  * 
  *     calculateOverlap_1(res1, res2, D_len, N, N_len, b, B, overlaps_ovlp)
  *     calculateOverlap_1(pres1, pres2, D_len, N, N_len, b, B, overlaps_P_ovlp)             # <<<<<<<<<<<<<<
@@ -3753,7 +3758,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
     __pyx_f_5optim_calculateOverlap_1(__pyx_v_pres1, __pyx_v_pres2, __pyx_v_D_len, __pyx_v_N, __pyx_v_N_len, __pyx_v_b, __pyx_v_B, __pyx_v_overlaps_P_ovlp);
   }
 
-  /* "optim.pyx":111
+  /* "optim.pyx":112
  *     calculateOverlap_1(pres1, pres2, D_len, N, N_len, b, B, overlaps_P_ovlp)
  * 
  *   free(res1)             # <<<<<<<<<<<<<<
@@ -3762,7 +3767,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_res1);
 
-  /* "optim.pyx":112
+  /* "optim.pyx":113
  * 
  *   free(res1)
  *   free(res2)             # <<<<<<<<<<<<<<
@@ -3771,7 +3776,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_res2);
 
-  /* "optim.pyx":113
+  /* "optim.pyx":114
  *   free(res1)
  *   free(res2)
  *   free(pres1)             # <<<<<<<<<<<<<<
@@ -3780,7 +3785,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_pres1);
 
-  /* "optim.pyx":114
+  /* "optim.pyx":115
  *   free(res2)
  *   free(pres1)
  *   free(pres2)             # <<<<<<<<<<<<<<
@@ -3789,27 +3794,27 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_pres2);
 
-  /* "optim.pyx":121
+  /* "optim.pyx":122
  * 
  *   cdef dict result = {
  *       "overlaps": np.reshape(overlaps_ovlp, (B, N_len)),             # <<<<<<<<<<<<<<
  *       "overlaps_P": np.reshape(overlaps_P_ovlp, (B, N_len)),
  *   }
  */
-  __pyx_t_7 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_reshape); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_reshape); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __pyx_convert_vector_to_py_double(__pyx_v_overlaps_ovlp); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_9 = __pyx_convert_vector_to_py_double(__pyx_v_overlaps_ovlp); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_11 = __Pyx_PyInt_From_int(__pyx_v_B); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyInt_From_int(__pyx_v_B); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
-  __pyx_t_12 = __Pyx_PyInt_From_int(__pyx_v_N_len); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyInt_From_int(__pyx_v_N_len); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
-  __pyx_t_13 = PyTuple_New(2); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_13 = PyTuple_New(2); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
   __Pyx_GIVEREF(__pyx_t_11);
   PyTuple_SET_ITEM(__pyx_t_13, 0, __pyx_t_11);
@@ -3832,7 +3837,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_10)) {
     PyObject *__pyx_temp[3] = {__pyx_t_12, __pyx_t_9, __pyx_t_13};
-    __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -3842,7 +3847,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
     PyObject *__pyx_temp[3] = {__pyx_t_12, __pyx_t_9, __pyx_t_13};
-    __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -3850,7 +3855,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
   } else
   #endif
   {
-    __pyx_t_11 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __pyx_t_11 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     if (__pyx_t_12) {
       __Pyx_GIVEREF(__pyx_t_12); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_12); __pyx_t_12 = NULL;
@@ -3861,33 +3866,33 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
     PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_4, __pyx_t_13);
     __pyx_t_9 = 0;
     __pyx_t_13 = 0;
-    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_11, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 121, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_11, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
   }
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_overlaps, __pyx_t_8) < 0) __PYX_ERR(0, 121, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_overlaps, __pyx_t_8) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-  /* "optim.pyx":122
+  /* "optim.pyx":123
  *   cdef dict result = {
  *       "overlaps": np.reshape(overlaps_ovlp, (B, N_len)),
  *       "overlaps_P": np.reshape(overlaps_P_ovlp, (B, N_len)),             # <<<<<<<<<<<<<<
  *   }
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_reshape); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_reshape); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __pyx_t_10 = __pyx_convert_vector_to_py_double(__pyx_v_overlaps_P_ovlp); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_10 = __pyx_convert_vector_to_py_double(__pyx_v_overlaps_P_ovlp); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_13 = __Pyx_PyInt_From_int(__pyx_v_B); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_13 = __Pyx_PyInt_From_int(__pyx_v_B); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
-  __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_N_len); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_N_len); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_12 = PyTuple_New(2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_12 = PyTuple_New(2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
   __Pyx_GIVEREF(__pyx_t_13);
   PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_13);
@@ -3910,7 +3915,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_11)) {
     PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_10, __pyx_t_12};
-    __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -3920,7 +3925,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_11)) {
     PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_10, __pyx_t_12};
-    __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -3928,7 +3933,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
   } else
   #endif
   {
-    __pyx_t_13 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_13 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_13);
     if (__pyx_t_9) {
       __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_13, 0, __pyx_t_9); __pyx_t_9 = NULL;
@@ -3939,17 +3944,17 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
     PyTuple_SET_ITEM(__pyx_t_13, 1+__pyx_t_4, __pyx_t_12);
     __pyx_t_10 = 0;
     __pyx_t_12 = 0;
-    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_13, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_13, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
   }
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_overlaps_P, __pyx_t_8) < 0) __PYX_ERR(0, 121, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_overlaps_P, __pyx_t_8) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_v_result = ((PyObject*)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "optim.pyx":125
+  /* "optim.pyx":126
  *   }
  * 
  *   return result #{'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)}             # <<<<<<<<<<<<<<
@@ -3961,7 +3966,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "optim.pyx":72
+  /* "optim.pyx":73
  * 
  * @cython.cdivision(True)
  * def calculateOverlaps1(double[:,:] D, double[:,:] S, double[:,:] pD, double[:,:] pS, int D_len, int[:] N, int N_len, double ssq_i, int B, double[:,:] overlaps, double[:,:] overlaps_P):             # <<<<<<<<<<<<<<
@@ -3994,7 +3999,7 @@ static PyObject *__pyx_pf_5optim_2calculateOverlaps1(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "optim.pyx":127
+/* "optim.pyx":128
  *   return result #{'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)}
  * 
  * cdef double[:] flatten(double[:,:] arr):             # <<<<<<<<<<<<<<
@@ -4032,7 +4037,7 @@ static __Pyx_memviewslice __pyx_f_5optim_flatten(__Pyx_memviewslice __pyx_v_arr)
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flatten", 0);
 
-  /* "optim.pyx":128
+  /* "optim.pyx":129
  * 
  * cdef double[:] flatten(double[:,:] arr):
  *   cdef Py_ssize_t x_max = arr.shape[0]             # <<<<<<<<<<<<<<
@@ -4041,7 +4046,7 @@ static __Pyx_memviewslice __pyx_f_5optim_flatten(__Pyx_memviewslice __pyx_v_arr)
  */
   __pyx_v_x_max = (__pyx_v_arr.shape[0]);
 
-  /* "optim.pyx":129
+  /* "optim.pyx":130
  * cdef double[:] flatten(double[:,:] arr):
  *   cdef Py_ssize_t x_max = arr.shape[0]
  *   cdef Py_ssize_t y_max = arr.shape[1]             # <<<<<<<<<<<<<<
@@ -4050,46 +4055,46 @@ static __Pyx_memviewslice __pyx_f_5optim_flatten(__Pyx_memviewslice __pyx_v_arr)
  */
   __pyx_v_y_max = (__pyx_v_arr.shape[1]);
 
-  /* "optim.pyx":130
+  /* "optim.pyx":131
  *   cdef Py_ssize_t x_max = arr.shape[0]
  *   cdef Py_ssize_t y_max = arr.shape[1]
  *   cdef double[:] res = np.zeros(x_max * y_max, dtype=np.double)             # <<<<<<<<<<<<<<
  *   cdef Py_ssize_t i, j
  *   cdef Py_ssize_t k = 0
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyInt_FromSsize_t((__pyx_v_x_max * __pyx_v_y_max)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t((__pyx_v_x_max * __pyx_v_y_max)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_double); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_double); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_v_res = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "optim.pyx":132
+  /* "optim.pyx":133
  *   cdef double[:] res = np.zeros(x_max * y_max, dtype=np.double)
  *   cdef Py_ssize_t i, j
  *   cdef Py_ssize_t k = 0             # <<<<<<<<<<<<<<
@@ -4098,7 +4103,7 @@ static __Pyx_memviewslice __pyx_f_5optim_flatten(__Pyx_memviewslice __pyx_v_arr)
  */
   __pyx_v_k = 0;
 
-  /* "optim.pyx":133
+  /* "optim.pyx":134
  *   cdef Py_ssize_t i, j
  *   cdef Py_ssize_t k = 0
  *   for i in range(x_max):             # <<<<<<<<<<<<<<
@@ -4110,7 +4115,7 @@ static __Pyx_memviewslice __pyx_f_5optim_flatten(__Pyx_memviewslice __pyx_v_arr)
   for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
     __pyx_v_i = __pyx_t_9;
 
-    /* "optim.pyx":134
+    /* "optim.pyx":135
  *   cdef Py_ssize_t k = 0
  *   for i in range(x_max):
  *     for j in range(y_max):             # <<<<<<<<<<<<<<
@@ -4122,7 +4127,7 @@ static __Pyx_memviewslice __pyx_f_5optim_flatten(__Pyx_memviewslice __pyx_v_arr)
     for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
       __pyx_v_j = __pyx_t_12;
 
-      /* "optim.pyx":135
+      /* "optim.pyx":136
  *   for i in range(x_max):
  *     for j in range(y_max):
  *       res[k] = arr[i, j]             # <<<<<<<<<<<<<<
@@ -4142,7 +4147,7 @@ static __Pyx_memviewslice __pyx_f_5optim_flatten(__Pyx_memviewslice __pyx_v_arr)
       } else if (unlikely(__pyx_t_14 >= __pyx_v_arr.shape[1])) __pyx_t_15 = 1;
       if (unlikely(__pyx_t_15 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_15);
-        __PYX_ERR(0, 135, __pyx_L1_error)
+        __PYX_ERR(0, 136, __pyx_L1_error)
       }
       __pyx_t_16 = __pyx_v_k;
       __pyx_t_15 = -1;
@@ -4152,11 +4157,11 @@ static __Pyx_memviewslice __pyx_f_5optim_flatten(__Pyx_memviewslice __pyx_v_arr)
       } else if (unlikely(__pyx_t_16 >= __pyx_v_res.shape[0])) __pyx_t_15 = 0;
       if (unlikely(__pyx_t_15 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_15);
-        __PYX_ERR(0, 135, __pyx_L1_error)
+        __PYX_ERR(0, 136, __pyx_L1_error)
       }
       *((double *) ( /* dim=0 */ (__pyx_v_res.data + __pyx_t_16 * __pyx_v_res.strides[0]) )) = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_arr.data + __pyx_t_13 * __pyx_v_arr.strides[0]) ) + __pyx_t_14 * __pyx_v_arr.strides[1]) )));
 
-      /* "optim.pyx":136
+      /* "optim.pyx":137
  *     for j in range(y_max):
  *       res[k] = arr[i, j]
  *       k += 1             # <<<<<<<<<<<<<<
@@ -4167,18 +4172,18 @@ static __Pyx_memviewslice __pyx_f_5optim_flatten(__Pyx_memviewslice __pyx_v_arr)
     }
   }
 
-  /* "optim.pyx":137
+  /* "optim.pyx":138
  *       res[k] = arr[i, j]
  *       k += 1
  *   return res             # <<<<<<<<<<<<<<
  * 
- * # Calculate the overlap
+ * cdef double sum = 0
  */
   __PYX_INC_MEMVIEW(&__pyx_v_res, 0);
   __pyx_r = __pyx_v_res;
   goto __pyx_L0;
 
-  /* "optim.pyx":127
+  /* "optim.pyx":128
  *   return result #{'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)}
  * 
  * cdef double[:] flatten(double[:,:] arr):             # <<<<<<<<<<<<<<
@@ -4208,8 +4213,8 @@ static __Pyx_memviewslice __pyx_f_5optim_flatten(__Pyx_memviewslice __pyx_v_arr)
   return __pyx_r;
 }
 
-/* "optim.pyx":140
- * 
+/* "optim.pyx":142
+ * cdef double sum = 0
  * # Calculate the overlap
  * cdef void calculateOverlap_1(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):             # <<<<<<<<<<<<<<
  *   # Copy r2 and sort the copy.
@@ -4221,7 +4226,6 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
   Py_ssize_t __pyx_v_k;
   Py_ssize_t __pyx_v_i;
   Py_ssize_t __pyx_v_j;
-  double __pyx_v_sum;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   int __pyx_t_2;
@@ -4231,12 +4235,13 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
   int __pyx_t_6;
   Py_ssize_t __pyx_t_7;
   int __pyx_t_8;
+  int __pyx_t_9;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("calculateOverlap_1", 0);
 
-  /* "optim.pyx":144
+  /* "optim.pyx":146
  *   #r3 = np.zeros(r_len, dtype=np.double)
  *   #cdef double[:] r3_view = r3
  *   cdef double *r3 = <double *>malloc(r_len * sizeof(double))             # <<<<<<<<<<<<<<
@@ -4245,7 +4250,7 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
  */
   __pyx_v_r3 = ((double *)malloc((__pyx_v_r_len * (sizeof(double)))));
 
-  /* "optim.pyx":147
+  /* "optim.pyx":149
  * 
  *   cdef Py_ssize_t k
  *   for k in range(r_len):             # <<<<<<<<<<<<<<
@@ -4257,7 +4262,7 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_k = __pyx_t_3;
 
-    /* "optim.pyx":148
+    /* "optim.pyx":150
  *   cdef Py_ssize_t k
  *   for k in range(r_len):
  *     r3[k] = r2[k]             # <<<<<<<<<<<<<<
@@ -4267,7 +4272,7 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
     (__pyx_v_r3[__pyx_v_k]) = (__pyx_v_r2[__pyx_v_k]);
   }
 
-  /* "optim.pyx":153
+  /* "optim.pyx":155
  *   #sort_memview(r3_view)
  *   #reverse_memview(r3_view)
  *   sort(r3, r3 + r_len)             # <<<<<<<<<<<<<<
@@ -4276,7 +4281,7 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
  */
   std::sort<double *>(__pyx_v_r3, (__pyx_v_r3 + __pyx_v_r_len));
 
-  /* "optim.pyx":154
+  /* "optim.pyx":156
  *   #reverse_memview(r3_view)
  *   sort(r3, r3 + r_len)
  *   custom_reverse(r3, r_len)             # <<<<<<<<<<<<<<
@@ -4285,7 +4290,7 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
  */
   __pyx_f_5optim_custom_reverse(__pyx_v_r3, __pyx_v_r_len);
 
-  /* "optim.pyx":158
+  /* "optim.pyx":160
  * 
  *   # Sort r2 by r1
  *   sort2_1(r1, r2, r_len)             # <<<<<<<<<<<<<<
@@ -4294,11 +4299,11 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
  */
   __pyx_f_5optim_sort2_1(__pyx_v_r1, __pyx_v_r2, __pyx_v_r_len);
 
-  /* "optim.pyx":164
+  /* "optim.pyx":165
+ *   cdef Py_ssize_t i, j
  *   #Calculate the overlap
- *   cdef double sum
  *   for i in range(N_len):             # <<<<<<<<<<<<<<
- *     sum = 0
+ *     global sum
  *     for j in range(N[i]):
  */
   __pyx_t_1 = __pyx_v_N_len;
@@ -4306,21 +4311,12 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "optim.pyx":165
- *   cdef double sum
+    /* "optim.pyx":167
  *   for i in range(N_len):
- *     sum = 0             # <<<<<<<<<<<<<<
- *     for j in range(N[i]):
- *       sum += (r2[j] >= r3[N[i] - 1])
- */
-    __pyx_v_sum = 0.0;
-
-    /* "optim.pyx":166
- *   for i in range(N_len):
- *     sum = 0
+ *     global sum
  *     for j in range(N[i]):             # <<<<<<<<<<<<<<
- *       sum += (r2[j] >= r3[N[i] - 1])
- *     overlaps[ (b-1) + i*B ] = sum / N[i]
+ *       if r2[j] >= r3[N[i] - 1]:
+ *         sum = sum + 1
  */
     __pyx_t_4 = __pyx_v_i;
     __pyx_t_5 = -1;
@@ -4330,19 +4326,19 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
     } else if (unlikely(__pyx_t_4 >= __pyx_v_N.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 166, __pyx_L1_error)
+      __PYX_ERR(0, 167, __pyx_L1_error)
     }
     __pyx_t_5 = (*((int *) ( /* dim=0 */ (__pyx_v_N.data + __pyx_t_4 * __pyx_v_N.strides[0]) )));
     __pyx_t_6 = __pyx_t_5;
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_j = __pyx_t_7;
 
-      /* "optim.pyx":167
- *     sum = 0
+      /* "optim.pyx":168
+ *     global sum
  *     for j in range(N[i]):
- *       sum += (r2[j] >= r3[N[i] - 1])             # <<<<<<<<<<<<<<
+ *       if r2[j] >= r3[N[i] - 1]:             # <<<<<<<<<<<<<<
+ *         sum = sum + 1
  *     overlaps[ (b-1) + i*B ] = sum / N[i]
- * 
  */
       __pyx_t_4 = __pyx_v_i;
       __pyx_t_8 = -1;
@@ -4352,16 +4348,35 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
       } else if (unlikely(__pyx_t_4 >= __pyx_v_N.shape[0])) __pyx_t_8 = 0;
       if (unlikely(__pyx_t_8 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_8);
-        __PYX_ERR(0, 167, __pyx_L1_error)
+        __PYX_ERR(0, 168, __pyx_L1_error)
       }
-      __pyx_v_sum = (__pyx_v_sum + ((__pyx_v_r2[__pyx_v_j]) >= (__pyx_v_r3[((*((int *) ( /* dim=0 */ (__pyx_v_N.data + __pyx_t_4 * __pyx_v_N.strides[0]) ))) - 1)])));
+      __pyx_t_9 = (((__pyx_v_r2[__pyx_v_j]) >= (__pyx_v_r3[((*((int *) ( /* dim=0 */ (__pyx_v_N.data + __pyx_t_4 * __pyx_v_N.strides[0]) ))) - 1)])) != 0);
+      if (__pyx_t_9) {
+
+        /* "optim.pyx":169
+ *     for j in range(N[i]):
+ *       if r2[j] >= r3[N[i] - 1]:
+ *         sum = sum + 1             # <<<<<<<<<<<<<<
+ *     overlaps[ (b-1) + i*B ] = sum / N[i]
+ *     sum = 0
+ */
+        __pyx_v_5optim_sum = (__pyx_v_5optim_sum + 1.0);
+
+        /* "optim.pyx":168
+ *     global sum
+ *     for j in range(N[i]):
+ *       if r2[j] >= r3[N[i] - 1]:             # <<<<<<<<<<<<<<
+ *         sum = sum + 1
+ *     overlaps[ (b-1) + i*B ] = sum / N[i]
+ */
+      }
     }
 
-    /* "optim.pyx":168
- *     for j in range(N[i]):
- *       sum += (r2[j] >= r3[N[i] - 1])
+    /* "optim.pyx":170
+ *       if r2[j] >= r3[N[i] - 1]:
+ *         sum = sum + 1
  *     overlaps[ (b-1) + i*B ] = sum / N[i]             # <<<<<<<<<<<<<<
- * 
+ *     sum = 0
  *   # Free memory for r3
  */
     __pyx_t_4 = __pyx_v_i;
@@ -4372,18 +4387,27 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
     } else if (unlikely(__pyx_t_4 >= __pyx_v_N.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 168, __pyx_L1_error)
+      __PYX_ERR(0, 170, __pyx_L1_error)
     }
     __pyx_t_5 = (*((int *) ( /* dim=0 */ (__pyx_v_N.data + __pyx_t_4 * __pyx_v_N.strides[0]) )));
     if (unlikely(__pyx_t_5 == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 168, __pyx_L1_error)
+      __PYX_ERR(0, 170, __pyx_L1_error)
     }
-    (__pyx_v_overlaps[((__pyx_v_b - 1) + (__pyx_v_i * __pyx_v_B))]) = (__pyx_v_sum / ((double)__pyx_t_5));
+    (__pyx_v_overlaps[((__pyx_v_b - 1) + (__pyx_v_i * __pyx_v_B))]) = (__pyx_v_5optim_sum / ((double)__pyx_t_5));
+
+    /* "optim.pyx":171
+ *         sum = sum + 1
+ *     overlaps[ (b-1) + i*B ] = sum / N[i]
+ *     sum = 0             # <<<<<<<<<<<<<<
+ *   # Free memory for r3
+ *   free(r3)
+ */
+    __pyx_v_5optim_sum = 0.0;
   }
 
-  /* "optim.pyx":171
- * 
+  /* "optim.pyx":173
+ *     sum = 0
  *   # Free memory for r3
  *   free(r3)             # <<<<<<<<<<<<<<
  * 
@@ -4391,8 +4415,8 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
  */
   free(__pyx_v_r3);
 
-  /* "optim.pyx":140
- * 
+  /* "optim.pyx":142
+ * cdef double sum = 0
  * # Calculate the overlap
  * cdef void calculateOverlap_1(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):             # <<<<<<<<<<<<<<
  *   # Copy r2 and sort the copy.
@@ -4407,7 +4431,7 @@ static void __pyx_f_5optim_calculateOverlap_1(double *__pyx_v_r1, double *__pyx_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "optim.pyx":174
+/* "optim.pyx":177
  * 
  * 
  * cdef void sort_memview(double[:] mv):             # <<<<<<<<<<<<<<
@@ -4426,7 +4450,7 @@ static void __pyx_f_5optim_sort_memview(__Pyx_memviewslice __pyx_v_mv) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("sort_memview", 0);
 
-  /* "optim.pyx":182
+  /* "optim.pyx":185
  *   # for i in range(len(data)):
  *   #   mv[i] = data[i]
  *   cdef double* ptr = &mv[0]             # <<<<<<<<<<<<<<
@@ -4441,11 +4465,11 @@ static void __pyx_f_5optim_sort_memview(__Pyx_memviewslice __pyx_v_mv) {
   } else if (unlikely(__pyx_t_1 >= __pyx_v_mv.shape[0])) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 182, __pyx_L1_error)
+    __PYX_ERR(0, 185, __pyx_L1_error)
   }
   __pyx_v_ptr = (&(*((double *) ( /* dim=0 */ (__pyx_v_mv.data + __pyx_t_1 * __pyx_v_mv.strides[0]) ))));
 
-  /* "optim.pyx":183
+  /* "optim.pyx":186
  *   #   mv[i] = data[i]
  *   cdef double* ptr = &mv[0]
  *   cdef Py_ssize_t length = mv.shape[0]             # <<<<<<<<<<<<<<
@@ -4454,7 +4478,7 @@ static void __pyx_f_5optim_sort_memview(__Pyx_memviewslice __pyx_v_mv) {
  */
   __pyx_v_length = (__pyx_v_mv.shape[0]);
 
-  /* "optim.pyx":185
+  /* "optim.pyx":188
  *   cdef Py_ssize_t length = mv.shape[0]
  * 
  *   qsort(ptr, length, sizeof(double), compare_func)             # <<<<<<<<<<<<<<
@@ -4463,7 +4487,7 @@ static void __pyx_f_5optim_sort_memview(__Pyx_memviewslice __pyx_v_mv) {
  */
   qsort(__pyx_v_ptr, __pyx_v_length, (sizeof(double)), __pyx_f_5optim_compare_func);
 
-  /* "optim.pyx":174
+  /* "optim.pyx":177
  * 
  * 
  * cdef void sort_memview(double[:] mv):             # <<<<<<<<<<<<<<
@@ -4479,7 +4503,7 @@ static void __pyx_f_5optim_sort_memview(__Pyx_memviewslice __pyx_v_mv) {
   __Pyx_RefNannyFinishContext();
 }
 
-/* "optim.pyx":187
+/* "optim.pyx":190
  *   qsort(ptr, length, sizeof(double), compare_func)
  * 
  * cdef void reverse_memview(double[:] mv):             # <<<<<<<<<<<<<<
@@ -4502,7 +4526,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("reverse_memview", 0);
 
-  /* "optim.pyx":188
+  /* "optim.pyx":191
  * 
  * cdef void reverse_memview(double[:] mv):
  *   cdef Py_ssize_t len = mv.shape[0]             # <<<<<<<<<<<<<<
@@ -4511,7 +4535,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
  */
   __pyx_v_len = (__pyx_v_mv.shape[0]);
 
-  /* "optim.pyx":189
+  /* "optim.pyx":192
  * cdef void reverse_memview(double[:] mv):
  *   cdef Py_ssize_t len = mv.shape[0]
  *   cdef double* ptr = &mv[0]             # <<<<<<<<<<<<<<
@@ -4526,11 +4550,11 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
   } else if (unlikely(__pyx_t_1 >= __pyx_v_mv.shape[0])) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 189, __pyx_L1_error)
+    __PYX_ERR(0, 192, __pyx_L1_error)
   }
   __pyx_v_ptr = (&(*((double *) ( /* dim=0 */ (__pyx_v_mv.data + __pyx_t_1 * __pyx_v_mv.strides[0]) ))));
 
-  /* "optim.pyx":191
+  /* "optim.pyx":194
  *   cdef double* ptr = &mv[0]
  * 
  *   cdef double* start = ptr             # <<<<<<<<<<<<<<
@@ -4539,7 +4563,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
  */
   __pyx_v_start = __pyx_v_ptr;
 
-  /* "optim.pyx":192
+  /* "optim.pyx":195
  * 
  *   cdef double* start = ptr
  *   cdef double* end = ptr + len - 1             # <<<<<<<<<<<<<<
@@ -4548,7 +4572,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
  */
   __pyx_v_end = ((__pyx_v_ptr + __pyx_v_len) - 1);
 
-  /* "optim.pyx":194
+  /* "optim.pyx":197
  *   cdef double* end = ptr + len - 1
  * 
  *   while start < end:             # <<<<<<<<<<<<<<
@@ -4559,7 +4583,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
     __pyx_t_3 = ((__pyx_v_start < __pyx_v_end) != 0);
     if (!__pyx_t_3) break;
 
-    /* "optim.pyx":195
+    /* "optim.pyx":198
  * 
  *   while start < end:
  *     temp = start[0]             # <<<<<<<<<<<<<<
@@ -4568,7 +4592,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
  */
     __pyx_v_temp = (__pyx_v_start[0]);
 
-    /* "optim.pyx":196
+    /* "optim.pyx":199
  *   while start < end:
  *     temp = start[0]
  *     start[0] = end[0]             # <<<<<<<<<<<<<<
@@ -4577,7 +4601,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
  */
     (__pyx_v_start[0]) = (__pyx_v_end[0]);
 
-    /* "optim.pyx":197
+    /* "optim.pyx":200
  *     temp = start[0]
  *     start[0] = end[0]
  *     end[0] = temp             # <<<<<<<<<<<<<<
@@ -4586,7 +4610,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
  */
     (__pyx_v_end[0]) = __pyx_v_temp;
 
-    /* "optim.pyx":198
+    /* "optim.pyx":201
  *     start[0] = end[0]
  *     end[0] = temp
  *     start += 1             # <<<<<<<<<<<<<<
@@ -4595,7 +4619,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
  */
     __pyx_v_start = (__pyx_v_start + 1);
 
-    /* "optim.pyx":199
+    /* "optim.pyx":202
  *     end[0] = temp
  *     start += 1
  *     end -= 1             # <<<<<<<<<<<<<<
@@ -4605,7 +4629,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
     __pyx_v_end = (__pyx_v_end - 1);
   }
 
-  /* "optim.pyx":187
+  /* "optim.pyx":190
  *   qsort(ptr, length, sizeof(double), compare_func)
  * 
  * cdef void reverse_memview(double[:] mv):             # <<<<<<<<<<<<<<
@@ -4621,7 +4645,7 @@ static void __pyx_f_5optim_reverse_memview(__Pyx_memviewslice __pyx_v_mv) {
   __Pyx_RefNannyFinishContext();
 }
 
-/* "optim.pyx":201
+/* "optim.pyx":204
  *     end -= 1
  * 
  * cdef void custom_reverse(double* arr, int length):             # <<<<<<<<<<<<<<
@@ -4638,7 +4662,7 @@ static void __pyx_f_5optim_custom_reverse(double *__pyx_v_arr, int __pyx_v_lengt
   double __pyx_t_3;
   __Pyx_RefNannySetupContext("custom_reverse", 0);
 
-  /* "optim.pyx":202
+  /* "optim.pyx":205
  * 
  * cdef void custom_reverse(double* arr, int length):
  *   cdef int start = 0             # <<<<<<<<<<<<<<
@@ -4647,7 +4671,7 @@ static void __pyx_f_5optim_custom_reverse(double *__pyx_v_arr, int __pyx_v_lengt
  */
   __pyx_v_start = 0;
 
-  /* "optim.pyx":203
+  /* "optim.pyx":206
  * cdef void custom_reverse(double* arr, int length):
  *   cdef int start = 0
  *   cdef int end = length - 1             # <<<<<<<<<<<<<<
@@ -4656,7 +4680,7 @@ static void __pyx_f_5optim_custom_reverse(double *__pyx_v_arr, int __pyx_v_lengt
  */
   __pyx_v_end = (__pyx_v_length - 1);
 
-  /* "optim.pyx":204
+  /* "optim.pyx":207
  *   cdef int start = 0
  *   cdef int end = length - 1
  *   while start < end:             # <<<<<<<<<<<<<<
@@ -4667,7 +4691,7 @@ static void __pyx_f_5optim_custom_reverse(double *__pyx_v_arr, int __pyx_v_lengt
     __pyx_t_1 = ((__pyx_v_start < __pyx_v_end) != 0);
     if (!__pyx_t_1) break;
 
-    /* "optim.pyx":206
+    /* "optim.pyx":209
  *   while start < end:
  *     # Swap elements
  *     arr[start], arr[end] = arr[end], arr[start]             # <<<<<<<<<<<<<<
@@ -4679,7 +4703,7 @@ static void __pyx_f_5optim_custom_reverse(double *__pyx_v_arr, int __pyx_v_lengt
     (__pyx_v_arr[__pyx_v_start]) = __pyx_t_2;
     (__pyx_v_arr[__pyx_v_end]) = __pyx_t_3;
 
-    /* "optim.pyx":207
+    /* "optim.pyx":210
  *     # Swap elements
  *     arr[start], arr[end] = arr[end], arr[start]
  *     start += 1             # <<<<<<<<<<<<<<
@@ -4688,7 +4712,7 @@ static void __pyx_f_5optim_custom_reverse(double *__pyx_v_arr, int __pyx_v_lengt
  */
     __pyx_v_start = (__pyx_v_start + 1);
 
-    /* "optim.pyx":208
+    /* "optim.pyx":211
  *     arr[start], arr[end] = arr[end], arr[start]
  *     start += 1
  *     end -= 1             # <<<<<<<<<<<<<<
@@ -4698,7 +4722,7 @@ static void __pyx_f_5optim_custom_reverse(double *__pyx_v_arr, int __pyx_v_lengt
     __pyx_v_end = (__pyx_v_end - 1);
   }
 
-  /* "optim.pyx":201
+  /* "optim.pyx":204
  *     end -= 1
  * 
  * cdef void custom_reverse(double* arr, int length):             # <<<<<<<<<<<<<<
@@ -4710,7 +4734,7 @@ static void __pyx_f_5optim_custom_reverse(double *__pyx_v_arr, int __pyx_v_lengt
   __Pyx_RefNannyFinishContext();
 }
 
-/* "optim.pyx":211
+/* "optim.pyx":214
  * 
  * # Sort array b based on the array a (decreasingly)
  * cdef void sort2_1(double *a, double *b, int n):             # <<<<<<<<<<<<<<
@@ -4733,7 +4757,7 @@ static void __pyx_f_5optim_sort2_1(double *__pyx_v_a, double *__pyx_v_b, int __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("sort2_1", 0);
 
-  /* "optim.pyx":215
+  /* "optim.pyx":218
  * 
  *   cdef vector[pair[double, double]] pairs
  *   pairs.reserve(n)             # <<<<<<<<<<<<<<
@@ -4742,7 +4766,7 @@ static void __pyx_f_5optim_sort2_1(double *__pyx_v_a, double *__pyx_v_b, int __p
  */
   __pyx_v_pairs.reserve(__pyx_v_n);
 
-  /* "optim.pyx":218
+  /* "optim.pyx":221
  * 
  *   cdef Py_ssize_t k
  *   for k in range(n):             # <<<<<<<<<<<<<<
@@ -4754,7 +4778,7 @@ static void __pyx_f_5optim_sort2_1(double *__pyx_v_a, double *__pyx_v_b, int __p
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_k = __pyx_t_3;
 
-    /* "optim.pyx":220
+    /* "optim.pyx":223
  *   for k in range(n):
  *     #pairs[k] = (a[k], b[k])
  *     pairs.push_back( pair[double, double](a[k], b[k]) )             # <<<<<<<<<<<<<<
@@ -4765,17 +4789,17 @@ static void __pyx_f_5optim_sort2_1(double *__pyx_v_a, double *__pyx_v_b, int __p
       __pyx_t_4 = std::pair<double,double> ((__pyx_v_a[__pyx_v_k]), (__pyx_v_b[__pyx_v_k]));
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 220, __pyx_L1_error)
+      __PYX_ERR(0, 223, __pyx_L1_error)
     }
     try {
       __pyx_v_pairs.push_back(__pyx_t_4);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 220, __pyx_L1_error)
+      __PYX_ERR(0, 223, __pyx_L1_error)
     }
   }
 
-  /* "optim.pyx":225
+  /* "optim.pyx":228
  *   # in the case of a tie, the second values are used.
  *   #pairs = pairs[np.lexsort((pairs[:, 1], pairs[:, 0]))]
  *   sort(pairs.begin(), pairs.end())             # <<<<<<<<<<<<<<
@@ -4784,7 +4808,7 @@ static void __pyx_f_5optim_sort2_1(double *__pyx_v_a, double *__pyx_v_b, int __p
  */
   std::sort<std::vector<std::pair<double,double> > ::iterator>(__pyx_v_pairs.begin(), __pyx_v_pairs.end());
 
-  /* "optim.pyx":230
+  /* "optim.pyx":233
  *   cdef Py_ssize_t i
  *   # Split the pairs back into the original vectors (dec).
  *   for i in range(n):             # <<<<<<<<<<<<<<
@@ -4796,7 +4820,7 @@ static void __pyx_f_5optim_sort2_1(double *__pyx_v_a, double *__pyx_v_b, int __p
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "optim.pyx":231
+    /* "optim.pyx":234
  *   # Split the pairs back into the original vectors (dec).
  *   for i in range(n):
  *     a[n-1-i] = pairs[i].first#pairs_view[i][0]             # <<<<<<<<<<<<<<
@@ -4806,7 +4830,7 @@ static void __pyx_f_5optim_sort2_1(double *__pyx_v_a, double *__pyx_v_b, int __p
     __pyx_t_5 = (__pyx_v_pairs[__pyx_v_i]).first;
     (__pyx_v_a[((__pyx_v_n - 1) - __pyx_v_i)]) = __pyx_t_5;
 
-    /* "optim.pyx":232
+    /* "optim.pyx":235
  *   for i in range(n):
  *     a[n-1-i] = pairs[i].first#pairs_view[i][0]
  *     b[n-1-i] = pairs[i].second#pairs_view[i][1]             # <<<<<<<<<<<<<<
@@ -4817,7 +4841,7 @@ static void __pyx_f_5optim_sort2_1(double *__pyx_v_a, double *__pyx_v_b, int __p
     (__pyx_v_b[((__pyx_v_n - 1) - __pyx_v_i)]) = __pyx_t_5;
   }
 
-  /* "optim.pyx":234
+  /* "optim.pyx":237
  *     b[n-1-i] = pairs[i].second#pairs_view[i][1]
  * 
  *   pairs.clear()             # <<<<<<<<<<<<<<
@@ -4826,7 +4850,7 @@ static void __pyx_f_5optim_sort2_1(double *__pyx_v_a, double *__pyx_v_b, int __p
  */
   __pyx_v_pairs.clear();
 
-  /* "optim.pyx":211
+  /* "optim.pyx":214
  * 
  * # Sort array b based on the array a (decreasingly)
  * cdef void sort2_1(double *a, double *b, int n):             # <<<<<<<<<<<<<<
@@ -4842,7 +4866,7 @@ static void __pyx_f_5optim_sort2_1(double *__pyx_v_a, double *__pyx_v_b, int __p
   __Pyx_RefNannyFinishContext();
 }
 
-/* "optim.pyx":237
+/* "optim.pyx":240
  * 
  * @cython.cdivision(True)
  * def calculateOverlaps2(double[:,:] D, double[:,:] pD, int D_len, int[:] N, int N_len, int B, double[:,:] overlaps, double[:,:] overlaps_P):             # <<<<<<<<<<<<<<
@@ -4903,47 +4927,47 @@ static PyObject *__pyx_pw_5optim_5calculateOverlaps2(PyObject *__pyx_self, PyObj
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pD)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 1); __PYX_ERR(0, 237, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 1); __PYX_ERR(0, 240, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_D_len)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 2); __PYX_ERR(0, 237, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 2); __PYX_ERR(0, 240, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_N)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 3); __PYX_ERR(0, 237, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 3); __PYX_ERR(0, 240, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_N_len)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 4); __PYX_ERR(0, 237, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 4); __PYX_ERR(0, 240, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_B)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 5); __PYX_ERR(0, 237, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 5); __PYX_ERR(0, 240, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_overlaps)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 6); __PYX_ERR(0, 237, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 6); __PYX_ERR(0, 240, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_overlaps_P)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 7); __PYX_ERR(0, 237, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, 7); __PYX_ERR(0, 240, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "calculateOverlaps2") < 0)) __PYX_ERR(0, 237, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "calculateOverlaps2") < 0)) __PYX_ERR(0, 240, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 8) {
       goto __pyx_L5_argtuple_error;
@@ -4957,18 +4981,18 @@ static PyObject *__pyx_pw_5optim_5calculateOverlaps2(PyObject *__pyx_self, PyObj
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
       values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
     }
-    __pyx_v_D = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_D.memview)) __PYX_ERR(0, 237, __pyx_L3_error)
-    __pyx_v_pD = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pD.memview)) __PYX_ERR(0, 237, __pyx_L3_error)
-    __pyx_v_D_len = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_D_len == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 237, __pyx_L3_error)
-    __pyx_v_N = __Pyx_PyObject_to_MemoryviewSlice_ds_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_N.memview)) __PYX_ERR(0, 237, __pyx_L3_error)
-    __pyx_v_N_len = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_N_len == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 237, __pyx_L3_error)
-    __pyx_v_B = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_B == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 237, __pyx_L3_error)
-    __pyx_v_overlaps = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[6], PyBUF_WRITABLE); if (unlikely(!__pyx_v_overlaps.memview)) __PYX_ERR(0, 237, __pyx_L3_error)
-    __pyx_v_overlaps_P = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[7], PyBUF_WRITABLE); if (unlikely(!__pyx_v_overlaps_P.memview)) __PYX_ERR(0, 237, __pyx_L3_error)
+    __pyx_v_D = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_D.memview)) __PYX_ERR(0, 240, __pyx_L3_error)
+    __pyx_v_pD = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pD.memview)) __PYX_ERR(0, 240, __pyx_L3_error)
+    __pyx_v_D_len = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_D_len == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 240, __pyx_L3_error)
+    __pyx_v_N = __Pyx_PyObject_to_MemoryviewSlice_ds_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_N.memview)) __PYX_ERR(0, 240, __pyx_L3_error)
+    __pyx_v_N_len = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_N_len == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 240, __pyx_L3_error)
+    __pyx_v_B = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_B == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 240, __pyx_L3_error)
+    __pyx_v_overlaps = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[6], PyBUF_WRITABLE); if (unlikely(!__pyx_v_overlaps.memview)) __PYX_ERR(0, 240, __pyx_L3_error)
+    __pyx_v_overlaps_P = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[7], PyBUF_WRITABLE); if (unlikely(!__pyx_v_overlaps_P.memview)) __PYX_ERR(0, 240, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 237, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("calculateOverlaps2", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 240, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("optim.calculateOverlaps2", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5013,7 +5037,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("calculateOverlaps2", 0);
 
-  /* "optim.pyx":238
+  /* "optim.pyx":241
  * @cython.cdivision(True)
  * def calculateOverlaps2(double[:,:] D, double[:,:] pD, int D_len, int[:] N, int N_len, int B, double[:,:] overlaps, double[:,:] overlaps_P):
  *   cdef vector[double] D_ovlp = flatten_to_vec(D)             # <<<<<<<<<<<<<<
@@ -5022,7 +5046,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_D_ovlp = __pyx_f_5optim_flatten_to_vec(__pyx_v_D);
 
-  /* "optim.pyx":239
+  /* "optim.pyx":242
  * def calculateOverlaps2(double[:,:] D, double[:,:] pD, int D_len, int[:] N, int N_len, int B, double[:,:] overlaps, double[:,:] overlaps_P):
  *   cdef vector[double] D_ovlp = flatten_to_vec(D)
  *   cdef vector[double] pD_ovlp = flatten_to_vec(pD)             # <<<<<<<<<<<<<<
@@ -5031,7 +5055,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_pD_ovlp = __pyx_f_5optim_flatten_to_vec(__pyx_v_pD);
 
-  /* "optim.pyx":240
+  /* "optim.pyx":243
  *   cdef vector[double] D_ovlp = flatten_to_vec(D)
  *   cdef vector[double] pD_ovlp = flatten_to_vec(pD)
  *   cdef vector[double] overlaps_ovlp = flatten_to_vec(overlaps)             # <<<<<<<<<<<<<<
@@ -5040,7 +5064,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_overlaps_ovlp = __pyx_f_5optim_flatten_to_vec(__pyx_v_overlaps);
 
-  /* "optim.pyx":242
+  /* "optim.pyx":245
  *   cdef vector[double] overlaps_ovlp = flatten_to_vec(overlaps)
  *   #cdef double[:] overlaps_view = overlaps_ovlp
  *   cdef vector[double] overlaps_P_ovlp = flatten_to_vec(overlaps_P)             # <<<<<<<<<<<<<<
@@ -5049,7 +5073,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_overlaps_P_ovlp = __pyx_f_5optim_flatten_to_vec(__pyx_v_overlaps_P);
 
-  /* "optim.pyx":253
+  /* "optim.pyx":256
  *   # pres2 = np.zeros(D_len, dtype=np.double)
  *   # cdef double[:] pres2_view = pres2
  *   cdef double *res1 = <double *>malloc(D_len * sizeof(double))             # <<<<<<<<<<<<<<
@@ -5058,7 +5082,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_res1 = ((double *)malloc((__pyx_v_D_len * (sizeof(double)))));
 
-  /* "optim.pyx":254
+  /* "optim.pyx":257
  *   # cdef double[:] pres2_view = pres2
  *   cdef double *res1 = <double *>malloc(D_len * sizeof(double))
  *   cdef double *res2 = <double *>malloc(D_len * sizeof(double))             # <<<<<<<<<<<<<<
@@ -5067,7 +5091,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_res2 = ((double *)malloc((__pyx_v_D_len * (sizeof(double)))));
 
-  /* "optim.pyx":255
+  /* "optim.pyx":258
  *   cdef double *res1 = <double *>malloc(D_len * sizeof(double))
  *   cdef double *res2 = <double *>malloc(D_len * sizeof(double))
  *   cdef double *pres1 = <double *>malloc(D_len * sizeof(double))             # <<<<<<<<<<<<<<
@@ -5076,7 +5100,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_pres1 = ((double *)malloc((__pyx_v_D_len * (sizeof(double)))));
 
-  /* "optim.pyx":256
+  /* "optim.pyx":259
  *   cdef double *res2 = <double *>malloc(D_len * sizeof(double))
  *   cdef double *pres1 = <double *>malloc(D_len * sizeof(double))
  *   cdef double *pres2 = <double *>malloc(D_len * sizeof(double))             # <<<<<<<<<<<<<<
@@ -5085,7 +5109,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_pres2 = ((double *)malloc((__pyx_v_D_len * (sizeof(double)))));
 
-  /* "optim.pyx":259
+  /* "optim.pyx":262
  * 
  *   cdef Py_ssize_t b,i
  *   for b in range(1, B):             # <<<<<<<<<<<<<<
@@ -5097,57 +5121,57 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_b = __pyx_t_3;
 
-    /* "optim.pyx":261
+    /* "optim.pyx":264
  *   for b in range(1, B):
  *     #res1, res2, pres1, pres2 = fast_make_res(res1, res2, pres1, pres2, D_ovlp, S_ovlp, pD_ovlp, pS_ovlp, D_len, ssq_i, b, B)
  *     for i in range(D_len):             # <<<<<<<<<<<<<<
- *       res1[i] = abs( D_ovlp[(b-1) * D_len + i] )
- *       res2[i] = abs( D_ovlp[(b + B - 1) * D_len + i] )
+ *       res1[i] = fabs( D_ovlp[(b-1) * D_len + i] )
+ *       res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] )
  */
     __pyx_t_4 = __pyx_v_D_len;
     __pyx_t_5 = __pyx_t_4;
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
 
-      /* "optim.pyx":262
+      /* "optim.pyx":265
  *     #res1, res2, pres1, pres2 = fast_make_res(res1, res2, pres1, pres2, D_ovlp, S_ovlp, pD_ovlp, pS_ovlp, D_len, ssq_i, b, B)
  *     for i in range(D_len):
- *       res1[i] = abs( D_ovlp[(b-1) * D_len + i] )             # <<<<<<<<<<<<<<
- *       res2[i] = abs( D_ovlp[(b + B - 1) * D_len + i] )
- *       pres1[i] = abs( pD_ovlp[(b-1) * D_len + i] )
+ *       res1[i] = fabs( D_ovlp[(b-1) * D_len + i] )             # <<<<<<<<<<<<<<
+ *       res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] )
+ *       pres1[i] = fabs( pD_ovlp[(b-1) * D_len + i] )
  */
       (__pyx_v_res1[__pyx_v_i]) = fabs((__pyx_v_D_ovlp[(((__pyx_v_b - 1) * __pyx_v_D_len) + __pyx_v_i)]));
 
-      /* "optim.pyx":263
+      /* "optim.pyx":266
  *     for i in range(D_len):
- *       res1[i] = abs( D_ovlp[(b-1) * D_len + i] )
- *       res2[i] = abs( D_ovlp[(b + B - 1) * D_len + i] )             # <<<<<<<<<<<<<<
- *       pres1[i] = abs( pD_ovlp[(b-1) * D_len + i] )
- *       pres2[i] = abs( pD_ovlp[(b + B - 1) * D_len + i] )
+ *       res1[i] = fabs( D_ovlp[(b-1) * D_len + i] )
+ *       res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] )             # <<<<<<<<<<<<<<
+ *       pres1[i] = fabs( pD_ovlp[(b-1) * D_len + i] )
+ *       pres2[i] = fabs( pD_ovlp[(b + B - 1) * D_len + i] )
  */
       (__pyx_v_res2[__pyx_v_i]) = fabs((__pyx_v_D_ovlp[((((__pyx_v_b + __pyx_v_B) - 1) * __pyx_v_D_len) + __pyx_v_i)]));
 
-      /* "optim.pyx":264
- *       res1[i] = abs( D_ovlp[(b-1) * D_len + i] )
- *       res2[i] = abs( D_ovlp[(b + B - 1) * D_len + i] )
- *       pres1[i] = abs( pD_ovlp[(b-1) * D_len + i] )             # <<<<<<<<<<<<<<
- *       pres2[i] = abs( pD_ovlp[(b + B - 1) * D_len + i] )
+      /* "optim.pyx":267
+ *       res1[i] = fabs( D_ovlp[(b-1) * D_len + i] )
+ *       res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] )
+ *       pres1[i] = fabs( pD_ovlp[(b-1) * D_len + i] )             # <<<<<<<<<<<<<<
+ *       pres2[i] = fabs( pD_ovlp[(b + B - 1) * D_len + i] )
  * 
  */
       (__pyx_v_pres1[__pyx_v_i]) = fabs((__pyx_v_pD_ovlp[(((__pyx_v_b - 1) * __pyx_v_D_len) + __pyx_v_i)]));
 
-      /* "optim.pyx":265
- *       res2[i] = abs( D_ovlp[(b + B - 1) * D_len + i] )
- *       pres1[i] = abs( pD_ovlp[(b-1) * D_len + i] )
- *       pres2[i] = abs( pD_ovlp[(b + B - 1) * D_len + i] )             # <<<<<<<<<<<<<<
+      /* "optim.pyx":268
+ *       res2[i] = fabs( D_ovlp[(b + B - 1) * D_len + i] )
+ *       pres1[i] = fabs( pD_ovlp[(b-1) * D_len + i] )
+ *       pres2[i] = fabs( pD_ovlp[(b + B - 1) * D_len + i] )             # <<<<<<<<<<<<<<
  * 
  *     calculateOverlap_2(res1, res2, D_len, N, N_len, b, B, overlaps_ovlp)
  */
       (__pyx_v_pres2[__pyx_v_i]) = fabs((__pyx_v_pD_ovlp[((((__pyx_v_b + __pyx_v_B) - 1) * __pyx_v_D_len) + __pyx_v_i)]));
     }
 
-    /* "optim.pyx":267
- *       pres2[i] = abs( pD_ovlp[(b + B - 1) * D_len + i] )
+    /* "optim.pyx":270
+ *       pres2[i] = fabs( pD_ovlp[(b + B - 1) * D_len + i] )
  * 
  *     calculateOverlap_2(res1, res2, D_len, N, N_len, b, B, overlaps_ovlp)             # <<<<<<<<<<<<<<
  *     calculateOverlap_2(pres1, pres2, D_len, N, N_len, b, B, overlaps_P_ovlp)
@@ -5155,7 +5179,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
     __pyx_f_5optim_calculateOverlap_2(__pyx_v_res1, __pyx_v_res2, __pyx_v_D_len, __pyx_v_N, __pyx_v_N_len, __pyx_v_b, __pyx_v_B, __pyx_v_overlaps_ovlp);
 
-    /* "optim.pyx":268
+    /* "optim.pyx":271
  * 
  *     calculateOverlap_2(res1, res2, D_len, N, N_len, b, B, overlaps_ovlp)
  *     calculateOverlap_2(pres1, pres2, D_len, N, N_len, b, B, overlaps_P_ovlp)             # <<<<<<<<<<<<<<
@@ -5165,7 +5189,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
     __pyx_f_5optim_calculateOverlap_2(__pyx_v_pres1, __pyx_v_pres2, __pyx_v_D_len, __pyx_v_N, __pyx_v_N_len, __pyx_v_b, __pyx_v_B, __pyx_v_overlaps_P_ovlp);
   }
 
-  /* "optim.pyx":270
+  /* "optim.pyx":273
  *     calculateOverlap_2(pres1, pres2, D_len, N, N_len, b, B, overlaps_P_ovlp)
  * 
  *   free(res1)             # <<<<<<<<<<<<<<
@@ -5174,7 +5198,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_res1);
 
-  /* "optim.pyx":271
+  /* "optim.pyx":274
  * 
  *   free(res1)
  *   free(res2)             # <<<<<<<<<<<<<<
@@ -5183,7 +5207,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_res2);
 
-  /* "optim.pyx":272
+  /* "optim.pyx":275
  *   free(res1)
  *   free(res2)
  *   free(pres1)             # <<<<<<<<<<<<<<
@@ -5192,7 +5216,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_pres1);
 
-  /* "optim.pyx":273
+  /* "optim.pyx":276
  *   free(res2)
  *   free(pres1)
  *   free(pres2)             # <<<<<<<<<<<<<<
@@ -5201,27 +5225,27 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_pres2);
 
-  /* "optim.pyx":280
+  /* "optim.pyx":283
  * 
  *   cdef dict result = {
  *         "overlaps": np.reshape(overlaps_ovlp, (B, N_len)),             # <<<<<<<<<<<<<<
  *         "overlaps_P": np.reshape(overlaps_P_ovlp, (B, N_len)),
  *     }
  */
-  __pyx_t_7 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 280, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 280, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_reshape); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 280, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_reshape); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __pyx_convert_vector_to_py_double(__pyx_v_overlaps_ovlp); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 280, __pyx_L1_error)
+  __pyx_t_9 = __pyx_convert_vector_to_py_double(__pyx_v_overlaps_ovlp); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_11 = __Pyx_PyInt_From_int(__pyx_v_B); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 280, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyInt_From_int(__pyx_v_B); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
-  __pyx_t_12 = __Pyx_PyInt_From_int(__pyx_v_N_len); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 280, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyInt_From_int(__pyx_v_N_len); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
-  __pyx_t_13 = PyTuple_New(2); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 280, __pyx_L1_error)
+  __pyx_t_13 = PyTuple_New(2); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
   __Pyx_GIVEREF(__pyx_t_11);
   PyTuple_SET_ITEM(__pyx_t_13, 0, __pyx_t_11);
@@ -5244,7 +5268,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_10)) {
     PyObject *__pyx_temp[3] = {__pyx_t_12, __pyx_t_9, __pyx_t_13};
-    __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 280, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 283, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -5254,7 +5278,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
     PyObject *__pyx_temp[3] = {__pyx_t_12, __pyx_t_9, __pyx_t_13};
-    __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 280, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 283, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -5262,7 +5286,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
   } else
   #endif
   {
-    __pyx_t_11 = PyTuple_New(2+__pyx_t_1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 280, __pyx_L1_error)
+    __pyx_t_11 = PyTuple_New(2+__pyx_t_1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 283, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     if (__pyx_t_12) {
       __Pyx_GIVEREF(__pyx_t_12); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_12); __pyx_t_12 = NULL;
@@ -5273,33 +5297,33 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
     PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_1, __pyx_t_13);
     __pyx_t_9 = 0;
     __pyx_t_13 = 0;
-    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_11, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 280, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_11, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 283, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
   }
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_overlaps, __pyx_t_8) < 0) __PYX_ERR(0, 280, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_overlaps, __pyx_t_8) < 0) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-  /* "optim.pyx":281
+  /* "optim.pyx":284
  *   cdef dict result = {
  *         "overlaps": np.reshape(overlaps_ovlp, (B, N_len)),
  *         "overlaps_P": np.reshape(overlaps_P_ovlp, (B, N_len)),             # <<<<<<<<<<<<<<
  *     }
  *   return result #{'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)}
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_reshape); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_reshape); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __pyx_t_10 = __pyx_convert_vector_to_py_double(__pyx_v_overlaps_P_ovlp); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __pyx_t_10 = __pyx_convert_vector_to_py_double(__pyx_v_overlaps_P_ovlp); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_13 = __Pyx_PyInt_From_int(__pyx_v_B); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __pyx_t_13 = __Pyx_PyInt_From_int(__pyx_v_B); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
-  __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_N_len); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_N_len); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_12 = PyTuple_New(2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __pyx_t_12 = PyTuple_New(2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
   __Pyx_GIVEREF(__pyx_t_13);
   PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_13);
@@ -5322,7 +5346,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_11)) {
     PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_10, __pyx_t_12};
-    __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 281, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -5332,7 +5356,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_11)) {
     PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_10, __pyx_t_12};
-    __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 281, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -5340,7 +5364,7 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
   } else
   #endif
   {
-    __pyx_t_13 = PyTuple_New(2+__pyx_t_1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 281, __pyx_L1_error)
+    __pyx_t_13 = PyTuple_New(2+__pyx_t_1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_13);
     if (__pyx_t_9) {
       __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_13, 0, __pyx_t_9); __pyx_t_9 = NULL;
@@ -5351,29 +5375,29 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
     PyTuple_SET_ITEM(__pyx_t_13, 1+__pyx_t_1, __pyx_t_12);
     __pyx_t_10 = 0;
     __pyx_t_12 = 0;
-    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_13, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 281, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_13, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
   }
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_overlaps_P, __pyx_t_8) < 0) __PYX_ERR(0, 280, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_overlaps_P, __pyx_t_8) < 0) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_v_result = ((PyObject*)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "optim.pyx":283
+  /* "optim.pyx":286
  *         "overlaps_P": np.reshape(overlaps_P_ovlp, (B, N_len)),
  *     }
  *   return result #{'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)}             # <<<<<<<<<<<<<<
  * 
- * # Calculate the overlap
+ * cdef double sum_1 = 0
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_result);
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "optim.pyx":237
+  /* "optim.pyx":240
  * 
  * @cython.cdivision(True)
  * def calculateOverlaps2(double[:,:] D, double[:,:] pD, int D_len, int[:] N, int N_len, int B, double[:,:] overlaps, double[:,:] overlaps_P):             # <<<<<<<<<<<<<<
@@ -5404,11 +5428,11 @@ static PyObject *__pyx_pf_5optim_4calculateOverlaps2(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "optim.pyx":286
- * 
+/* "optim.pyx":290
+ * cdef double sum_1 = 0
  * # Calculate the overlap
  * cdef void calculateOverlap_2(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):             # <<<<<<<<<<<<<<
- *    # Copy r2 and sort the copy.
+ *   # Copy r2 and sort the copy.
  *   #r3 = np.zeros(r_len, dtype=np.double)
  */
 
@@ -5417,7 +5441,6 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
   Py_ssize_t __pyx_v_k;
   Py_ssize_t __pyx_v_i;
   Py_ssize_t __pyx_v_j;
-  double __pyx_v_sum;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   int __pyx_t_2;
@@ -5427,12 +5450,13 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
   int __pyx_t_6;
   Py_ssize_t __pyx_t_7;
   int __pyx_t_8;
+  int __pyx_t_9;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("calculateOverlap_2", 0);
 
-  /* "optim.pyx":290
+  /* "optim.pyx":294
  *   #r3 = np.zeros(r_len, dtype=np.double)
  *   #cdef double[:] r3_view = r3
  *   cdef double *r3 = <double *>malloc(r_len * sizeof(double))             # <<<<<<<<<<<<<<
@@ -5441,7 +5465,7 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
  */
   __pyx_v_r3 = ((double *)malloc((__pyx_v_r_len * (sizeof(double)))));
 
-  /* "optim.pyx":293
+  /* "optim.pyx":297
  * 
  *   cdef Py_ssize_t k
  *   for k in range(r_len):             # <<<<<<<<<<<<<<
@@ -5453,7 +5477,7 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_k = __pyx_t_3;
 
-    /* "optim.pyx":294
+    /* "optim.pyx":298
  *   cdef Py_ssize_t k
  *   for k in range(r_len):
  *     r3[k] = r2[k]             # <<<<<<<<<<<<<<
@@ -5463,7 +5487,7 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
     (__pyx_v_r3[__pyx_v_k]) = (__pyx_v_r2[__pyx_v_k]);
   }
 
-  /* "optim.pyx":299
+  /* "optim.pyx":303
  *   #sort_memview(r3_view)
  *   #reverse_memview(r3_view)
  *   sort(r3, r3 + r_len)             # <<<<<<<<<<<<<<
@@ -5472,7 +5496,7 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
  */
   std::sort<double *>(__pyx_v_r3, (__pyx_v_r3 + __pyx_v_r_len));
 
-  /* "optim.pyx":300
+  /* "optim.pyx":304
  *   #reverse_memview(r3_view)
  *   sort(r3, r3 + r_len)
  *   custom_reverse(r3, r_len)             # <<<<<<<<<<<<<<
@@ -5481,7 +5505,7 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
  */
   __pyx_f_5optim_custom_reverse(__pyx_v_r3, __pyx_v_r_len);
 
-  /* "optim.pyx":303
+  /* "optim.pyx":307
  * 
  *   # Sort r2 by r1
  *   sort2_2(r1, r2, r_len)             # <<<<<<<<<<<<<<
@@ -5490,11 +5514,11 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
  */
   __pyx_f_5optim_sort2_2(__pyx_v_r1, __pyx_v_r2, __pyx_v_r_len);
 
-  /* "optim.pyx":309
- *   cdef double sum
+  /* "optim.pyx":312
+ *   cdef Py_ssize_t i, j
  *   #Calculate the overlap
  *   for i in range(N_len):             # <<<<<<<<<<<<<<
- *     sum = 0
+ *     global sum_1
  *     for j in range(N[i]):
  */
   __pyx_t_1 = __pyx_v_N_len;
@@ -5502,21 +5526,12 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "optim.pyx":310
- *   #Calculate the overlap
+    /* "optim.pyx":314
  *   for i in range(N_len):
- *     sum = 0             # <<<<<<<<<<<<<<
- *     for j in range(N[i]):
- *       sum += (r2[j] >= r3[N[i] - 1])
- */
-    __pyx_v_sum = 0.0;
-
-    /* "optim.pyx":311
- *   for i in range(N_len):
- *     sum = 0
+ *     global sum_1
  *     for j in range(N[i]):             # <<<<<<<<<<<<<<
- *       sum += (r2[j] >= r3[N[i] - 1])
- *     overlaps[ (b-1) + i*B ] = sum / N[i]
+ *       if r2[j] >= r3[N[i] - 1]:
+ *         sum_1 = sum_1 + 1
  */
     __pyx_t_4 = __pyx_v_i;
     __pyx_t_5 = -1;
@@ -5526,19 +5541,19 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
     } else if (unlikely(__pyx_t_4 >= __pyx_v_N.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 311, __pyx_L1_error)
+      __PYX_ERR(0, 314, __pyx_L1_error)
     }
     __pyx_t_5 = (*((int *) ( /* dim=0 */ (__pyx_v_N.data + __pyx_t_4 * __pyx_v_N.strides[0]) )));
     __pyx_t_6 = __pyx_t_5;
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_j = __pyx_t_7;
 
-      /* "optim.pyx":312
- *     sum = 0
+      /* "optim.pyx":315
+ *     global sum_1
  *     for j in range(N[i]):
- *       sum += (r2[j] >= r3[N[i] - 1])             # <<<<<<<<<<<<<<
- *     overlaps[ (b-1) + i*B ] = sum / N[i]
- *     sum = 0
+ *       if r2[j] >= r3[N[i] - 1]:             # <<<<<<<<<<<<<<
+ *         sum_1 = sum_1 + 1
+ *     overlaps[ (b-1) + i*B ] = sum_1 / N[i]
  */
       __pyx_t_4 = __pyx_v_i;
       __pyx_t_8 = -1;
@@ -5548,16 +5563,35 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
       } else if (unlikely(__pyx_t_4 >= __pyx_v_N.shape[0])) __pyx_t_8 = 0;
       if (unlikely(__pyx_t_8 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_8);
-        __PYX_ERR(0, 312, __pyx_L1_error)
+        __PYX_ERR(0, 315, __pyx_L1_error)
       }
-      __pyx_v_sum = (__pyx_v_sum + ((__pyx_v_r2[__pyx_v_j]) >= (__pyx_v_r3[((*((int *) ( /* dim=0 */ (__pyx_v_N.data + __pyx_t_4 * __pyx_v_N.strides[0]) ))) - 1)])));
+      __pyx_t_9 = (((__pyx_v_r2[__pyx_v_j]) >= (__pyx_v_r3[((*((int *) ( /* dim=0 */ (__pyx_v_N.data + __pyx_t_4 * __pyx_v_N.strides[0]) ))) - 1)])) != 0);
+      if (__pyx_t_9) {
+
+        /* "optim.pyx":316
+ *     for j in range(N[i]):
+ *       if r2[j] >= r3[N[i] - 1]:
+ *         sum_1 = sum_1 + 1             # <<<<<<<<<<<<<<
+ *     overlaps[ (b-1) + i*B ] = sum_1 / N[i]
+ *     sum_1 = 0
+ */
+        __pyx_v_5optim_sum_1 = (__pyx_v_5optim_sum_1 + 1.0);
+
+        /* "optim.pyx":315
+ *     global sum_1
+ *     for j in range(N[i]):
+ *       if r2[j] >= r3[N[i] - 1]:             # <<<<<<<<<<<<<<
+ *         sum_1 = sum_1 + 1
+ *     overlaps[ (b-1) + i*B ] = sum_1 / N[i]
+ */
+      }
     }
 
-    /* "optim.pyx":313
- *     for j in range(N[i]):
- *       sum += (r2[j] >= r3[N[i] - 1])
- *     overlaps[ (b-1) + i*B ] = sum / N[i]             # <<<<<<<<<<<<<<
- *     sum = 0
+    /* "optim.pyx":317
+ *       if r2[j] >= r3[N[i] - 1]:
+ *         sum_1 = sum_1 + 1
+ *     overlaps[ (b-1) + i*B ] = sum_1 / N[i]             # <<<<<<<<<<<<<<
+ *     sum_1 = 0
  *   free(r3)
  */
     __pyx_t_4 = __pyx_v_i;
@@ -5568,39 +5602,39 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
     } else if (unlikely(__pyx_t_4 >= __pyx_v_N.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 313, __pyx_L1_error)
+      __PYX_ERR(0, 317, __pyx_L1_error)
     }
     __pyx_t_5 = (*((int *) ( /* dim=0 */ (__pyx_v_N.data + __pyx_t_4 * __pyx_v_N.strides[0]) )));
     if (unlikely(__pyx_t_5 == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 313, __pyx_L1_error)
+      __PYX_ERR(0, 317, __pyx_L1_error)
     }
-    (__pyx_v_overlaps[((__pyx_v_b - 1) + (__pyx_v_i * __pyx_v_B))]) = (__pyx_v_sum / ((double)__pyx_t_5));
+    (__pyx_v_overlaps[((__pyx_v_b - 1) + (__pyx_v_i * __pyx_v_B))]) = (__pyx_v_5optim_sum_1 / ((double)__pyx_t_5));
 
-    /* "optim.pyx":314
- *       sum += (r2[j] >= r3[N[i] - 1])
- *     overlaps[ (b-1) + i*B ] = sum / N[i]
- *     sum = 0             # <<<<<<<<<<<<<<
+    /* "optim.pyx":318
+ *         sum_1 = sum_1 + 1
+ *     overlaps[ (b-1) + i*B ] = sum_1 / N[i]
+ *     sum_1 = 0             # <<<<<<<<<<<<<<
  *   free(r3)
  * 
  */
-    __pyx_v_sum = 0.0;
+    __pyx_v_5optim_sum_1 = 0.0;
   }
 
-  /* "optim.pyx":315
- *     overlaps[ (b-1) + i*B ] = sum / N[i]
- *     sum = 0
+  /* "optim.pyx":319
+ *     overlaps[ (b-1) + i*B ] = sum_1 / N[i]
+ *     sum_1 = 0
  *   free(r3)             # <<<<<<<<<<<<<<
  * 
- * cdef vector[double] flatten_to_vec(double[:, :] arr):
+ * 
  */
   free(__pyx_v_r3);
 
-  /* "optim.pyx":286
- * 
+  /* "optim.pyx":290
+ * cdef double sum_1 = 0
  * # Calculate the overlap
  * cdef void calculateOverlap_2(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):             # <<<<<<<<<<<<<<
- *    # Copy r2 and sort the copy.
+ *   # Copy r2 and sort the copy.
  *   #r3 = np.zeros(r_len, dtype=np.double)
  */
 
@@ -5612,8 +5646,8 @@ static void __pyx_f_5optim_calculateOverlap_2(double *__pyx_v_r1, double *__pyx_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "optim.pyx":317
- *   free(r3)
+/* "optim.pyx":323
+ * 
  * 
  * cdef vector[double] flatten_to_vec(double[:, :] arr):             # <<<<<<<<<<<<<<
  *     cdef Py_ssize_t rows = arr.shape[0]
@@ -5642,7 +5676,7 @@ static std::vector<double>  __pyx_f_5optim_flatten_to_vec(__Pyx_memviewslice __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("flatten_to_vec", 0);
 
-  /* "optim.pyx":318
+  /* "optim.pyx":324
  * 
  * cdef vector[double] flatten_to_vec(double[:, :] arr):
  *     cdef Py_ssize_t rows = arr.shape[0]             # <<<<<<<<<<<<<<
@@ -5651,7 +5685,7 @@ static std::vector<double>  __pyx_f_5optim_flatten_to_vec(__Pyx_memviewslice __p
  */
   __pyx_v_rows = (__pyx_v_arr.shape[0]);
 
-  /* "optim.pyx":319
+  /* "optim.pyx":325
  * cdef vector[double] flatten_to_vec(double[:, :] arr):
  *     cdef Py_ssize_t rows = arr.shape[0]
  *     cdef Py_ssize_t cols = arr.shape[1]             # <<<<<<<<<<<<<<
@@ -5660,7 +5694,7 @@ static std::vector<double>  __pyx_f_5optim_flatten_to_vec(__Pyx_memviewslice __p
  */
   __pyx_v_cols = (__pyx_v_arr.shape[1]);
 
-  /* "optim.pyx":324
+  /* "optim.pyx":330
  *     cdef Py_ssize_t i, j
  * 
  *     for i in range(rows):             # <<<<<<<<<<<<<<
@@ -5672,7 +5706,7 @@ static std::vector<double>  __pyx_f_5optim_flatten_to_vec(__Pyx_memviewslice __p
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "optim.pyx":325
+    /* "optim.pyx":331
  * 
  *     for i in range(rows):
  *         for j in range(cols):             # <<<<<<<<<<<<<<
@@ -5684,7 +5718,7 @@ static std::vector<double>  __pyx_f_5optim_flatten_to_vec(__Pyx_memviewslice __p
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_j = __pyx_t_6;
 
-      /* "optim.pyx":326
+      /* "optim.pyx":332
  *     for i in range(rows):
  *         for j in range(cols):
  *             vec.push_back(arr[i, j])             # <<<<<<<<<<<<<<
@@ -5704,18 +5738,18 @@ static std::vector<double>  __pyx_f_5optim_flatten_to_vec(__Pyx_memviewslice __p
       } else if (unlikely(__pyx_t_8 >= __pyx_v_arr.shape[1])) __pyx_t_9 = 1;
       if (unlikely(__pyx_t_9 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_9);
-        __PYX_ERR(0, 326, __pyx_L1_error)
+        __PYX_ERR(0, 332, __pyx_L1_error)
       }
       try {
         __pyx_v_vec.push_back((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_arr.data + __pyx_t_7 * __pyx_v_arr.strides[0]) ) + __pyx_t_8 * __pyx_v_arr.strides[1]) ))));
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        __PYX_ERR(0, 326, __pyx_L1_error)
+        __PYX_ERR(0, 332, __pyx_L1_error)
       }
     }
   }
 
-  /* "optim.pyx":328
+  /* "optim.pyx":334
  *             vec.push_back(arr[i, j])
  * 
  *     return vec             # <<<<<<<<<<<<<<
@@ -5725,8 +5759,8 @@ static std::vector<double>  __pyx_f_5optim_flatten_to_vec(__Pyx_memviewslice __p
   __pyx_r = __pyx_v_vec;
   goto __pyx_L0;
 
-  /* "optim.pyx":317
- *   free(r3)
+  /* "optim.pyx":323
+ * 
  * 
  * cdef vector[double] flatten_to_vec(double[:, :] arr):             # <<<<<<<<<<<<<<
  *     cdef Py_ssize_t rows = arr.shape[0]
@@ -5742,7 +5776,7 @@ static std::vector<double>  __pyx_f_5optim_flatten_to_vec(__Pyx_memviewslice __p
   return __pyx_r;
 }
 
-/* "optim.pyx":331
+/* "optim.pyx":337
  * 
  * # Sort array b based on the array a (decreasingly)
  * cdef void sort2_2(double *a, double *b, int n):             # <<<<<<<<<<<<<<
@@ -5765,7 +5799,7 @@ static void __pyx_f_5optim_sort2_2(double *__pyx_v_a, double *__pyx_v_b, int __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("sort2_2", 0);
 
-  /* "optim.pyx":335
+  /* "optim.pyx":341
  * 
  *   cdef vector[pair[double, double]] pairs
  *   pairs.reserve(n)             # <<<<<<<<<<<<<<
@@ -5774,7 +5808,7 @@ static void __pyx_f_5optim_sort2_2(double *__pyx_v_a, double *__pyx_v_b, int __p
  */
   __pyx_v_pairs.reserve(__pyx_v_n);
 
-  /* "optim.pyx":338
+  /* "optim.pyx":344
  * 
  *   cdef Py_ssize_t k
  *   for k in range(n):             # <<<<<<<<<<<<<<
@@ -5786,7 +5820,7 @@ static void __pyx_f_5optim_sort2_2(double *__pyx_v_a, double *__pyx_v_b, int __p
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_k = __pyx_t_3;
 
-    /* "optim.pyx":340
+    /* "optim.pyx":346
  *   for k in range(n):
  *     #pairs[k] = (a[k], b[k])
  *     pairs.push_back( pair[double, double](a[k], b[k]) )             # <<<<<<<<<<<<<<
@@ -5797,17 +5831,17 @@ static void __pyx_f_5optim_sort2_2(double *__pyx_v_a, double *__pyx_v_b, int __p
       __pyx_t_4 = std::pair<double,double> ((__pyx_v_a[__pyx_v_k]), (__pyx_v_b[__pyx_v_k]));
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 340, __pyx_L1_error)
+      __PYX_ERR(0, 346, __pyx_L1_error)
     }
     try {
       __pyx_v_pairs.push_back(__pyx_t_4);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 340, __pyx_L1_error)
+      __PYX_ERR(0, 346, __pyx_L1_error)
     }
   }
 
-  /* "optim.pyx":345
+  /* "optim.pyx":351
  *   # in the case of a tie, the second values are used.
  *   #pairs = pairs[np.lexsort((pairs[:, 1], pairs[:, 0]))]
  *   sort(pairs.begin(), pairs.end())             # <<<<<<<<<<<<<<
@@ -5816,7 +5850,7 @@ static void __pyx_f_5optim_sort2_2(double *__pyx_v_a, double *__pyx_v_b, int __p
  */
   std::sort<std::vector<std::pair<double,double> > ::iterator>(__pyx_v_pairs.begin(), __pyx_v_pairs.end());
 
-  /* "optim.pyx":350
+  /* "optim.pyx":356
  *   cdef Py_ssize_t i
  *   # Split the pairs back into the original vectors (dec).
  *   for i in range(n):             # <<<<<<<<<<<<<<
@@ -5828,7 +5862,7 @@ static void __pyx_f_5optim_sort2_2(double *__pyx_v_a, double *__pyx_v_b, int __p
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "optim.pyx":351
+    /* "optim.pyx":357
  *   # Split the pairs back into the original vectors (dec).
  *   for i in range(n):
  *     a[n-1-i] = pairs[i].first#pairs_view[i][0]             # <<<<<<<<<<<<<<
@@ -5838,7 +5872,7 @@ static void __pyx_f_5optim_sort2_2(double *__pyx_v_a, double *__pyx_v_b, int __p
     __pyx_t_5 = (__pyx_v_pairs[__pyx_v_i]).first;
     (__pyx_v_a[((__pyx_v_n - 1) - __pyx_v_i)]) = __pyx_t_5;
 
-    /* "optim.pyx":352
+    /* "optim.pyx":358
  *   for i in range(n):
  *     a[n-1-i] = pairs[i].first#pairs_view[i][0]
  *     b[n-1-i] = pairs[i].second#pairs_view[i][1]             # <<<<<<<<<<<<<<
@@ -5849,14 +5883,14 @@ static void __pyx_f_5optim_sort2_2(double *__pyx_v_a, double *__pyx_v_b, int __p
     (__pyx_v_b[((__pyx_v_n - 1) - __pyx_v_i)]) = __pyx_t_5;
   }
 
-  /* "optim.pyx":354
+  /* "optim.pyx":360
  *     b[n-1-i] = pairs[i].second#pairs_view[i][1]
  * 
  *   pairs.clear()             # <<<<<<<<<<<<<<
  */
   __pyx_v_pairs.clear();
 
-  /* "optim.pyx":331
+  /* "optim.pyx":337
  * 
  * # Sort array b based on the array a (decreasingly)
  * cdef void sort2_2(double *a, double *b, int n):             # <<<<<<<<<<<<<<
@@ -20906,8 +20940,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 19, __pyx_L1_error)
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 21, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 944, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(2, 134, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(2, 149, __pyx_L1_error)
@@ -21142,41 +21176,41 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_GIVEREF(__pyx_tuple__21);
 
-  /* "optim.pyx":47
+  /* "optim.pyx":48
  * 
  * #@cython.boundscheck(False)  # Deactivate bounds checking
  * def pvalue(double[:] observed, double[:] permuted):             # <<<<<<<<<<<<<<
  *   cdef Py_ssize_t a_max = observed.shape[0]
  *   cdef Py_ssize_t b_max = permuted.shape[0]
  */
-  __pyx_tuple__22 = PyTuple_Pack(8, __pyx_n_s_observed, __pyx_n_s_permuted, __pyx_n_s_a_max, __pyx_n_s_b_max, __pyx_n_s_pvalues, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_pvalues_array); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_tuple__22 = PyTuple_Pack(8, __pyx_n_s_observed, __pyx_n_s_permuted, __pyx_n_s_a_max, __pyx_n_s_b_max, __pyx_n_s_pvalues, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_pvalues_array); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(2, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_optim_pyx, __pyx_n_s_pvalue, 47, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(2, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_optim_pyx, __pyx_n_s_pvalue, 48, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 48, __pyx_L1_error)
 
-  /* "optim.pyx":72
+  /* "optim.pyx":73
  * 
  * @cython.cdivision(True)
  * def calculateOverlaps1(double[:,:] D, double[:,:] S, double[:,:] pD, double[:,:] pS, int D_len, int[:] N, int N_len, double ssq_i, int B, double[:,:] overlaps, double[:,:] overlaps_P):             # <<<<<<<<<<<<<<
  *   # cdef double[:] D_ovlp = flatten(D)
  *   # cdef double[:] S_ovlp = flatten(S)
  */
-  __pyx_tuple__24 = PyTuple_Pack(24, __pyx_n_s_D, __pyx_n_s_S, __pyx_n_s_pD, __pyx_n_s_pS, __pyx_n_s_D_len, __pyx_n_s_N, __pyx_n_s_N_len, __pyx_n_s_ssq_i, __pyx_n_s_B, __pyx_n_s_overlaps, __pyx_n_s_overlaps_P, __pyx_n_s_D_ovlp, __pyx_n_s_S_ovlp, __pyx_n_s_pD_ovlp, __pyx_n_s_pS_ovlp, __pyx_n_s_overlaps_ovlp, __pyx_n_s_overlaps_P_ovlp, __pyx_n_s_res1, __pyx_n_s_res2, __pyx_n_s_pres1, __pyx_n_s_pres2, __pyx_n_s_b, __pyx_n_s_i, __pyx_n_s_result); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __pyx_tuple__24 = PyTuple_Pack(24, __pyx_n_s_D, __pyx_n_s_S, __pyx_n_s_pD, __pyx_n_s_pS, __pyx_n_s_D_len, __pyx_n_s_N, __pyx_n_s_N_len, __pyx_n_s_ssq_i, __pyx_n_s_B, __pyx_n_s_overlaps, __pyx_n_s_overlaps_P, __pyx_n_s_D_ovlp, __pyx_n_s_S_ovlp, __pyx_n_s_pD_ovlp, __pyx_n_s_pS_ovlp, __pyx_n_s_overlaps_ovlp, __pyx_n_s_overlaps_P_ovlp, __pyx_n_s_res1, __pyx_n_s_res2, __pyx_n_s_pres1, __pyx_n_s_pres2, __pyx_n_s_b, __pyx_n_s_i, __pyx_n_s_result); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__24);
   __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(11, 0, 24, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_optim_pyx, __pyx_n_s_calculateOverlaps1, 72, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(11, 0, 24, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_optim_pyx, __pyx_n_s_calculateOverlaps1, 73, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 73, __pyx_L1_error)
 
-  /* "optim.pyx":237
+  /* "optim.pyx":240
  * 
  * @cython.cdivision(True)
  * def calculateOverlaps2(double[:,:] D, double[:,:] pD, int D_len, int[:] N, int N_len, int B, double[:,:] overlaps, double[:,:] overlaps_P):             # <<<<<<<<<<<<<<
  *   cdef vector[double] D_ovlp = flatten_to_vec(D)
  *   cdef vector[double] pD_ovlp = flatten_to_vec(pD)
  */
-  __pyx_tuple__26 = PyTuple_Pack(19, __pyx_n_s_D, __pyx_n_s_pD, __pyx_n_s_D_len, __pyx_n_s_N, __pyx_n_s_N_len, __pyx_n_s_B, __pyx_n_s_overlaps, __pyx_n_s_overlaps_P, __pyx_n_s_D_ovlp, __pyx_n_s_pD_ovlp, __pyx_n_s_overlaps_ovlp, __pyx_n_s_overlaps_P_ovlp, __pyx_n_s_res1, __pyx_n_s_res2, __pyx_n_s_pres1, __pyx_n_s_pres2, __pyx_n_s_b, __pyx_n_s_i, __pyx_n_s_result); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 237, __pyx_L1_error)
+  __pyx_tuple__26 = PyTuple_Pack(19, __pyx_n_s_D, __pyx_n_s_pD, __pyx_n_s_D_len, __pyx_n_s_N, __pyx_n_s_N_len, __pyx_n_s_B, __pyx_n_s_overlaps, __pyx_n_s_overlaps_P, __pyx_n_s_D_ovlp, __pyx_n_s_pD_ovlp, __pyx_n_s_overlaps_ovlp, __pyx_n_s_overlaps_P_ovlp, __pyx_n_s_res1, __pyx_n_s_res2, __pyx_n_s_pres1, __pyx_n_s_pres2, __pyx_n_s_b, __pyx_n_s_i, __pyx_n_s_result); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__26);
   __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(8, 0, 19, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_optim_pyx, __pyx_n_s_calculateOverlaps2, 237, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 237, __pyx_L1_error)
+  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(8, 0, 19, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_optim_pyx, __pyx_n_s_calculateOverlaps2, 240, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 240, __pyx_L1_error)
 
   /* "View.MemoryView":287
  *         return self.name
@@ -21637,41 +21671,59 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "optim.pyx":47
+  /* "optim.pyx":48
  * 
  * #@cython.boundscheck(False)  # Deactivate bounds checking
  * def pvalue(double[:] observed, double[:] permuted):             # <<<<<<<<<<<<<<
  *   cdef Py_ssize_t a_max = observed.shape[0]
  *   cdef Py_ssize_t b_max = permuted.shape[0]
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5optim_1pvalue, NULL, __pyx_n_s_optim); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5optim_1pvalue, NULL, __pyx_n_s_optim); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pvalue, __pyx_t_1) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pvalue, __pyx_t_1) < 0) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "optim.pyx":72
+  /* "optim.pyx":73
  * 
  * @cython.cdivision(True)
  * def calculateOverlaps1(double[:,:] D, double[:,:] S, double[:,:] pD, double[:,:] pS, int D_len, int[:] N, int N_len, double ssq_i, int B, double[:,:] overlaps, double[:,:] overlaps_P):             # <<<<<<<<<<<<<<
  *   # cdef double[:] D_ovlp = flatten(D)
  *   # cdef double[:] S_ovlp = flatten(S)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5optim_3calculateOverlaps1, NULL, __pyx_n_s_optim); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5optim_3calculateOverlaps1, NULL, __pyx_n_s_optim); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calculateOverlaps1, __pyx_t_1) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calculateOverlaps1, __pyx_t_1) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "optim.pyx":237
+  /* "optim.pyx":140
+ *   return res
+ * 
+ * cdef double sum = 0             # <<<<<<<<<<<<<<
+ * # Calculate the overlap
+ * cdef void calculateOverlap_1(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):
+ */
+  __pyx_v_5optim_sum = 0.0;
+
+  /* "optim.pyx":240
  * 
  * @cython.cdivision(True)
  * def calculateOverlaps2(double[:,:] D, double[:,:] pD, int D_len, int[:] N, int N_len, int B, double[:,:] overlaps, double[:,:] overlaps_P):             # <<<<<<<<<<<<<<
  *   cdef vector[double] D_ovlp = flatten_to_vec(D)
  *   cdef vector[double] pD_ovlp = flatten_to_vec(pD)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5optim_5calculateOverlaps2, NULL, __pyx_n_s_optim); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5optim_5calculateOverlaps2, NULL, __pyx_n_s_optim); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calculateOverlaps2, __pyx_t_1) < 0) __PYX_ERR(0, 237, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calculateOverlaps2, __pyx_t_1) < 0) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "optim.pyx":288
+ *   return result #{'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)}
+ * 
+ * cdef double sum_1 = 0             # <<<<<<<<<<<<<<
+ * # Calculate the overlap
+ * cdef void calculateOverlap_2(double *r1, double *r2, int r_len, int[:] N, int N_len, Py_ssize_t b, int B, vector[double]& overlaps):
+ */
+  __pyx_v_5optim_sum_1 = 0.0;
 
   /* "optim.pyx":1
  * # cython: language_level=3             # <<<<<<<<<<<<<<

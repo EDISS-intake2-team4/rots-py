@@ -3,5 +3,5 @@
 include requirements*.txt
 include LICENSE.txt
 include src/optim_cy/*.pyd
-include src/optim_cy/*.cpp
+include src/optim_cy/*.so
 exclude src/optim_cy/setup.py

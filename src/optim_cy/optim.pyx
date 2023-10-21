@@ -12,23 +12,23 @@ from libc.stdlib cimport malloc, free
 from libc.math cimport fabs
 
 
-cdef extern from "stdlib.h":
-  void qsort(void* base, size_t nmemb, size_t size, int (*compar)(const void*, const void*))
+# cdef extern from "stdlib.h":
+#   void qsort(void* base, size_t nmemb, size_t size, int (*compar)(const void*, const void*))
 
 cdef void print_array(double* arr, int length):
   cdef Py_ssize_t i
   for i in range(length):
     print(arr[i])
 
-cdef int compare_func(const void* a, const void* b):
-  cdef double element_a = (<double*>a)[0]
-  cdef double element_b = (<double*>b)[0]
-  if element_a < element_b:
-      return -1
-  elif element_a > element_b:
-      return 1
-  else:
-      return 0
+# cdef int compare_func(const void* a, const void* b):
+#   cdef double element_a = (<double*>a)[0]
+#   cdef double element_b = (<double*>b)[0]
+#   if element_a < element_b:
+#       return -1
+#   elif element_a > element_b:
+#       return 1
+#   else:
+#       return 0
 
 # cpdef double[:] flatten_array(arr):
 #   if len(arr.shape) != 2:
@@ -125,17 +125,17 @@ def calculateOverlaps1(double[:,:] D, double[:,:] S, double[:,:] pD, double[:,:]
 
   return result #{'overlaps': overlaps_ovlp.reshape(overlaps.shape), 'overlaps_P': overlaps_P_ovlp.reshape(overlaps_P.shape)} 
 
-cdef double[:] flatten(double[:,:] arr):
-  cdef Py_ssize_t x_max = arr.shape[0]
-  cdef Py_ssize_t y_max = arr.shape[1]
-  cdef double[:] res = np.zeros(x_max * y_max, dtype=np.double)
-  cdef Py_ssize_t i, j
-  cdef Py_ssize_t k = 0
-  for i in range(x_max):
-    for j in range(y_max):
-      res[k] = arr[i, j]
-      k += 1
-  return res
+# cdef double[:] flatten(double[:,:] arr):
+#   cdef Py_ssize_t x_max = arr.shape[0]
+#   cdef Py_ssize_t y_max = arr.shape[1]
+#   cdef double[:] res = np.zeros(x_max * y_max, dtype=np.double)
+#   cdef Py_ssize_t i, j
+#   cdef Py_ssize_t k = 0
+#   for i in range(x_max):
+#     for j in range(y_max):
+#       res[k] = arr[i, j]
+#       k += 1
+#   return res
 
 cdef double sum = 0
 # Calculate the overlap
@@ -174,7 +174,7 @@ cdef void calculateOverlap_1(double *r1, double *r2, int r_len, int[:] N, int N_
 
 
 
-cdef void sort_memview(double[:] mv):
+#cdef void sort_memview(double[:] mv):
   # data = [item for item in mv]  
   # data.sort()
 
@@ -182,24 +182,24 @@ cdef void sort_memview(double[:] mv):
   # # Copy the sorted values back to the memoryview
   # for i in range(len(data)):
   #   mv[i] = data[i]
-  cdef double* ptr = &mv[0]
-  cdef Py_ssize_t length = mv.shape[0]
+#  cdef double* ptr = &mv[0]
+#  cdef Py_ssize_t length = mv.shape[0]
 
-  qsort(ptr, length, sizeof(double), compare_func)
+#  qsort(ptr, length, sizeof(double), compare_func)
 
-cdef void reverse_memview(double[:] mv):
-  cdef Py_ssize_t len = mv.shape[0]
-  cdef double* ptr = &mv[0]
+# cdef void reverse_memview(double[:] mv):
+#   cdef Py_ssize_t len = mv.shape[0]
+#   cdef double* ptr = &mv[0]
 
-  cdef double* start = ptr
-  cdef double* end = ptr + len - 1
+#   cdef double* start = ptr
+#   cdef double* end = ptr + len - 1
 
-  while start < end:
-    temp = start[0]
-    start[0] = end[0]
-    end[0] = temp
-    start += 1
-    end -= 1
+#   while start < end:
+#     temp = start[0]
+#     start[0] = end[0]
+#     end[0] = temp
+#     start += 1
+#     end -= 1
 
 cdef void custom_reverse(double* arr, int length):
   cdef int start = 0

@@ -4,7 +4,7 @@ import pandas as pd
 from tqdm import tqdm
 import warnings
 
-from optim_cy import optim
+from optim_cy.optim import optim
 
 @jit(nopython=True, error_model='numpy')
 def bootstrapSamples(B, labels, paired):
@@ -136,8 +136,6 @@ def calculateP(observed, permuted):
   observed = -np.sort(-abs(observed)) #sort(abs(observed), decreasing=TRUE)
   permuted = -np.sort(-np.abs(permuted.flatten())) #sort(abs(as.vector(permuted)), decreasing=TRUE)
   
-  print("observed shape: ", observed.shape)
-  print("permuted shape: ", permuted.shape)
   # Get p-values from C++ code
   # (expects ordered vectors)
   p = optim.pvalue(observed, permuted)

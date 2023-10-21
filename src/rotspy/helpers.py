@@ -4,7 +4,7 @@ import pandas as pd
 from tqdm import tqdm
 import warnings
 
-from optim_cy.optim import optim
+from optim_cy import optim
 
 @jit(nopython=True, error_model='numpy')
 def bootstrapSamples(B, labels, paired):

@@ -109,6 +109,13 @@ Plots the ROTS results.
 This package was developed as part of the [EDISS](https://www.master-ediss.eu/) program in collaboration with Coffey Lab at the [Turku Bioscience](https://bioscience.fi/) center.
 
 # Changelog
+
+## 1.4.0
+- Added support for Python 3.9 on Linux
+
+## 1.3.0
+- Added support for Python 3.8 on Linux
+
 ## 1.2.0
 - Added `get_summary` function
 - Added `plot_rots` function
